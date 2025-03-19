@@ -1,0 +1,20 @@
+@page "/"
+@inherits BaseComponent
+
+<div class="patient-selection-container">
+    @foreach (BookingFor bookingOption in Enum.GetValues(typeof(BookingFor)))
+    {
+        <button class="btn btn-primary" type="button" @onclick="() => HandleValidSubmit(bookingOption)">
+            @bookingOption
+        </button>
+    }
+</div>
+
+@code {
+    private void HandleValidSubmit(BookingFor bookingFor)
+    {
+        Console.WriteLine(bookingFor);
+        _modelState.BookingFor = bookingFor;
+        _navigationManager.NavigateTo("/visit-reason");
+    }
+}

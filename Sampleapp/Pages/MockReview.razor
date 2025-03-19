@@ -1,0 +1,32 @@
+@page "/review"
+@inherits BaseComponent;
+<h4>Review and confirm</h4>
+
+<div class="review-container">
+    <h5>Whis this appt</h5>
+    <p>Booking for : @_modelState.BookingFor</p>
+</div>
+
+<div class="review-container">
+    <h5>visit reason data</h5>
+    <p>Visit reason Name : @_modelState.VisitReasonForm.VisitReasonName</p>
+    <p>PatientRelationship : @_modelState.VisitReasonForm.PatientRelationship</p>
+    <p>VisitMethod : @_modelState.VisitReasonForm.VisitMethod</p>
+    <p>ReasonComment : @_modelState.VisitReasonForm.ReasonComment</p>
+    @* <button @onclick="() => GoToPage('visit-reason')">Edit</button> *@
+    <button @onclick="GoToPage">Edit</button>
+</div>
+
+<div class="review-container">
+    <h5>appt details</h5>
+    <p>Selected Time : @_modelState.SelectedTime</p>
+</div>
+
+
+@code
+{
+    private void GoToPage()
+    {
+        _navigationManager.NavigateTo("/visit-reason");
+    }
+}

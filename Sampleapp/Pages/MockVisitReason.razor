@@ -1,0 +1,47 @@
+﻿@page "/visit-reason"
+
+@inherits BaseComponent;
+
+<PageTitle>Visit reason</PageTitle>
+
+<button @onclick="GoToPrevious">back</button>
+<h4 class="header">Visit reason</h4>
+<EditForm Model="@_modelState.VisitReasonForm" OnValidSubmit="HandleValidSubmit">
+    <div class="form-group">
+        <label for="visitReasonName">Visit Reason Name</label>
+        <InputText id="visitReasonName" class="form-control" @bind-Value="_modelState.VisitReasonForm.VisitReasonName" />
+    </div>
+
+    <div class="form-group">
+        <label for="patientRelationship">Patient Relationship</label>
+        <InputText id="patientRelationship" class="form-control" @bind-Value="_modelState.VisitReasonForm.PatientRelationship" />
+    </div>
+
+    <div class="form-group">
+        <label for="visitMethod">Visit Method</label>
+        <InputText id="visitMethod" class="form-control" @bind-Value="_modelState.VisitReasonForm.VisitMethod" />
+    </div>
+
+    <div class="form-group">
+        <label for="reasonComment">Reason Comment</label>
+        <InputTextArea id="reasonComment" class="form-control" @bind-Value="_modelState.VisitReasonForm.ReasonComment" />
+    </div>
+
+    <button class="btn btn-primary" type="submit" >Next</button>
+</EditForm>
+
+@code {   
+        private void HandleValidSubmit() 
+        {
+           _navigationManager.NavigateTo("/select-time");
+            Console.WriteLine("Form submitted successfully!");
+            Console.WriteLine($"Visit Reason Name: {_modelState?.VisitReasonForm?.VisitReasonName}");
+            Console.WriteLine($"Patient Relationship: {_modelState?.VisitReasonForm?.PatientRelationship}");
+            Console.WriteLine($"Visit Method: {_modelState?.VisitReasonForm?.VisitMethod}");
+        }
+
+        private void GoToPrevious()
+        {
+            _navigationManager.NavigateTo("/");
+        }
+    }

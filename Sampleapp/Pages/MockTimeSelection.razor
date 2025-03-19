@@ -1,0 +1,32 @@
+﻿@page "/select-time"
+@inherits BaseComponent;
+
+<PageTitle>Time selection</PageTitle>
+<button @onclick="GoToPrevious">back</button>
+<h4 class="header">Time selection</h4>
+
+<h5 role="status">Schedule Appointment</h5>
+
+@foreach(var time in timeSlots)
+{
+    <button style="margin-right:10px;" class="btn btn-primary" @onclick="() => HandleValidSubmit(time)" >@time</button>
+}
+
+
+@code {
+    
+    private string[] timeSlots = { "8.00", "9.00", "10.00", "11.00", "12.00", "1.00" };
+
+
+    private void HandleValidSubmit(string time)
+    {
+        Console.WriteLine(time);
+        _modelState.SelectedTime = time;
+        _navigationManager.NavigateTo("/review");
+    }
+
+    private void GoToPrevious()
+        {
+            _navigationManager.NavigateTo("/visit-reason");
+        }
+}

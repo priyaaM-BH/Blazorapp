@@ -1,0 +1,20 @@
+﻿@page "/telehealth"
+@inherits BaseComponent;
+
+<PageTitle>Telehealth</PageTitle>
+<button>back</button>
+<h4 class="header">Telehealth</h4>
+<label for="email">Enter email</label>
+<input id="email" type="email" @bind="_modelState.TelehealthCommunictaionEmail" />
+<button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
+
+@code {
+    
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine(_modelState.TelehealthCommunictaionEmail);
+        _navigationManager.NavigateTo("/review");
+    }
+
+    
+}
