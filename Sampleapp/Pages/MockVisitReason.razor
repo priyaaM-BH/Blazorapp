@@ -34,10 +34,6 @@
         private void HandleValidSubmit() 
         {
            _navigationManager.NavigateTo("/select-time");
-            Console.WriteLine("Form submitted successfully!");
-            Console.WriteLine($"Visit Reason Name: {_modelState?.VisitReasonForm?.VisitReasonName}");
-            Console.WriteLine($"Patient Relationship: {_modelState?.VisitReasonForm?.PatientRelationship}");
-            Console.WriteLine($"Visit Method: {_modelState?.VisitReasonForm?.VisitMethod}");
         }
 
         private void GoToPrevious()

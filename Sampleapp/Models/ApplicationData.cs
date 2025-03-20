@@ -1,8 +1,8 @@
 namespace SampleApp.Models
 {
-    public class BookingDetails
+    public class ApplicationData
     {
-        public BookingDetails()
+        public ApplicationData()
         {
             this.VisitReasonForm = new VisitReasonForm();
         }
