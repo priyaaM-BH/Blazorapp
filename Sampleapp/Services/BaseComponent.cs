@@ -7,7 +7,9 @@ public class BaseComponent : ComponentBase
 {
     [Inject]
     protected NavigationManager _navigationManager { get; set; } = default!;
-    public static ApplicationData _modelState { get; set; } = new();
+    public static VisitReasonSeries _modelState { get; set; } = new();
+
+    public static InsuranceSeries _InsuranceSeries { get; set; } = new();
 
 }
 }
