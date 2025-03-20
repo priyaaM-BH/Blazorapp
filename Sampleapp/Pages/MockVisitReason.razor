@@ -5,26 +5,35 @@
 <PageTitle>Visit reason</PageTitle>
 
 <button @onclick="GoToPrevious">back</button>
-<h4 class="header">Visit reason</h4>
-<EditForm Model="@_modelState.VisitReasonForm" OnValidSubmit="HandleValidSubmit">
+@if(_visitReasonPermanent.IsEditing)
+{
+    <h4 class="header">Edit Visit reason</h4>
+}
+else
+{
+    <h4 class="header">Visit reason</h4>
+}
+
+<EditForm Model="@_visitReasonTemp.VisitReasonForm" OnValidSubmit="HandleValidSubmit">
     <div class="form-group">
         <label for="visitReasonName">Visit Reason Name</label>
-        <InputText id="visitReasonName" class="form-control" @bind-Value="_modelState.VisitReasonForm.VisitReasonName" />
+        <InputText id="visitReasonName" class="form-control" @bind-Value="_visitReasonTemp.VisitReasonForm.VisitReasonName" />
     </div>
 
     <div class="form-group">
         <label for="patientRelationship">Patient Relationship</label>
-        <InputText id="patientRelationship" class="form-control" @bind-Value="_modelState.VisitReasonForm.PatientRelationship" />
+        <InputText id="patientRelationship" class="form-control" @bind-Value="_visitReasonTemp.VisitReasonForm.PatientRelationship" />
     </div>
 
     <div class="form-group">
         <label for="visitMethod">Visit Method</label>
-        <InputText id="visitMethod" class="form-control" @bind-Value="_modelState.VisitReasonForm.VisitMethod" />
+        <InputText id="visitMethod" class="form-control" @bind-Value="_visitReasonTemp.VisitReasonForm.VisitMethod" />
+        @* <input type="checkbox" @bind="_visitReasonTemp.VisitReasonForm.VisitMethod" /> *@
     </div>
 
     <div class="form-group">
         <label for="reasonComment">Reason Comment</label>
-        <InputTextArea id="reasonComment" class="form-control" @bind-Value="_modelState.VisitReasonForm.ReasonComment" />
+        <InputTextArea id="reasonComment" class="form-control" @bind-Value="_visitReasonTemp.VisitReasonForm.ReasonComment" />
     </div>
 
     <button class="btn btn-primary" type="submit" >Next</button>
@@ -33,8 +42,10 @@
 <br>
 <p>​I am a page component accessible through the NavigationManager and routing mechanisms. I have access to the cascading values I require.</p>
 @code {   
+        private bool ContainsEdit => _navigationManager.Uri.Contains("edit", StringComparison.OrdinalIgnoreCase);
         private void HandleValidSubmit() 
         {
+            Console.WriteLine("is editing ",ContainsEdit);
            _navigationManager.NavigateTo("/select-time");
         }
 

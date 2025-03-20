@@ -3,32 +3,45 @@
 <h4>Review and confirm</h4>
 
 <div class="review-container">
-    <h5>Whis this appt</h5>
-    <p>Booking for : @_modelState.BookingFor</p>
+    <h5>Who this appt</h5>
+    <p>Booking for : @_patientInformationSeries.BookingFor</p>
+    <p>Booking for : @_patientInformationSeries.Name</p>
 </div>
 
 <div class="review-container">
     <h5>visit reason data</h5>
-    <p>Visit reason Name : @_modelState.VisitReasonForm.VisitReasonName</p>
-    <p>PatientRelationship : @_modelState.VisitReasonForm.PatientRelationship</p>
-    <p>VisitMethod : @_modelState.VisitReasonForm.VisitMethod</p>
-    <p>ReasonComment : @_modelState.VisitReasonForm.ReasonComment</p>
+    <p>Visit reason Name : @_visitReasonPermanent.VisitReasonForm.VisitReasonName</p>
+    <p>PatientRelationship : @_visitReasonPermanent.VisitReasonForm.PatientRelationship</p>
+    <p>VisitMethod : @_visitReasonPermanent.VisitReasonForm.VisitMethod</p>
+    <p>ReasonComment : @_visitReasonPermanent.VisitReasonForm.ReasonComment</p>
     @* <button @onclick="() => GoToPage('visit-reason')">Edit</button> *@
     <button @onclick="GoToPage">Edit</button>
 </div>
 
 <div class="review-container">
     <h5>appt details</h5>
-    <p>Selected Time : @_modelState.SelectedTime</p>
+    <p>Selected Time : @_visitReasonPermanent.SelectedTime</p>
+</div>
+
+<div class="review-container">
+    <h5>Telehealth</h5>
+    <p>Selected Time : @_visitReasonPermanent.TelehealthCommunictaionEmail</p>
 </div>
 <br>
 <br>
 <p>​I am a page component accessible through the NavigationManager and routing mechanisms. I have access to the cascading values I require.</p>
 
+<p>editing visit reason : @_visitReasonPermanent.IsEditing</p>
 @code
 {
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine(_visitReasonPermanent.ProviderID);
+        Console.WriteLine(_visitReasonTemp.ProviderID);
+    }
     private void GoToPage()
     {
+        _visitReasonPermanent.IsEditing = true;
         _navigationManager.NavigateTo("/visit-reason");
     }
 }

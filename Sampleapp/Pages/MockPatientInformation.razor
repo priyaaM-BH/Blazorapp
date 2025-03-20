@@ -1,0 +1,14 @@
+@page "/patient-info"
+@inherits BaseComponent;
+
+<h4>Patient Information</h4>
+<label for="name">Enter name</label>
+<input id="name" type="text" @bind="_patientInformationSeries.Name" />
+<button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
+@code 
+{
+private void HandleValidSubmit()
+    {
+        _navigationManager.NavigateTo("/telehealth");
+    }
+}

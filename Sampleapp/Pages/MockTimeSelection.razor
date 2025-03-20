@@ -4,8 +4,15 @@
 <PageTitle>Time selection</PageTitle>
 <button @onclick="GoToPrevious">back</button>
 <h4 class="header">Time selection</h4>
+@if(_visitReasonPermanent.IsEditing)
+{
+    <h4 class="header">Edit Appointment</h4>
+}
+else
+{
+    <h5 role="status">Schedule Appointment</h5>
+}
 
-<h5 role="status">Schedule Appointment</h5>
 
 @foreach(var time in timeSlots)
 {
@@ -22,9 +29,26 @@
 
     private void HandleValidSubmit(string time)
     {
-        Console.WriteLine(time);
-        _modelState.SelectedTime = time;
-        _navigationManager.NavigateTo("/review");
+        _visitReasonTemp.SelectedTime = time;
+        if(_visitReasonPermanent.IsEditing)
+        {
+            if( _visitReasonTemp?.VisitReasonForm?.VisitMethod == "video")
+            {
+                _navigationManager.NavigateTo("/telehealth");
+            }
+            else
+            {
+                _navigationManager.NavigateTo("/review");
+            }
+            
+        }
+        else
+        {
+            //edit visit reason flow will end here for in-person
+            _visitReasonPermanent = _visitReasonTemp;
+            _navigationManager.NavigateTo("/patient-info");
+        }
+        
     }
 
     private void GoToPrevious()
