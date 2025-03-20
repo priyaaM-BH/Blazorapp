@@ -1,0 +1,24 @@
+@page "/gfe"
+@inherits BaseComponent;
+
+<PageTitle>GFE</PageTitle>
+<button @onclick="GoToPrevious">back</button>
+<h4 class="header">GFE</h4>
+<label for="email">Enter email</label>
+<input id="email" type="email" @bind="_InsuranceSeries.GFEEmail" />
+<button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
+
+@code {
+    
+    private void HandleValidSubmit()
+    {
+        _navigationManager.NavigateTo("/review");
+    }
+
+    private void GoToPrevious()
+    {
+        _navigationManager.NavigateTo("/select-time");
+    }
+
+    
+}
