@@ -31,8 +31,8 @@
     {
        var providerResponse = await Http.GetFromJsonAsync<Provider>("sample-data/Provider.json");
        Provider = providerResponse?.Content?.Results?.FirstOrDefault();
-       Console.WriteLine(Provider?.Name?.LastName);
-    
     }
+
+    //TODO: Make all the initial http calls for portal user, relationships, portal user application and cascade it
 
 }
