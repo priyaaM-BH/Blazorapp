@@ -1,3 +1,4 @@
+
 namespace SampleApp.Models
 {
     public class ApplicationData
@@ -6,6 +7,7 @@ namespace SampleApp.Models
         {
             this.VisitReasonForm = new VisitReasonForm();
         }
+        public string? ProviderID { get; set; }
         public BookingFor? BookingFor { get; set; }
         public VisitReasonForm? VisitReasonForm { get; set; }
         public string? SelectedTime { get; set; }

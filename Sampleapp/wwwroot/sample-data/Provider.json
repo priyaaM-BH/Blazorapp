@@ -1,0 +1,266 @@
+{
+    "content": {
+        "status": "OK",
+        "results": [
+            {
+                "locations": [
+                    {
+                        "city": "Glendale",
+                        "commercialEntityName": "Banner Children's Specialists Pulmonology and Sleep Medicine Clinic",
+                        "latitude": "33.61141",
+                        "longitude": "-112.174774",
+                        "distance": "",
+                        "email": "7382446477",
+                        "externalId": "7382446477",
+                        "facilityFee": "false",
+                        "fax": "602-865-4497",
+                        "name": "Banner Children's Specialists Pulmonology and Sleep Medicine Clinic",
+                        "officeHours": null,
+                        "phone": "602-865-4480",
+                        "rank": "1",
+                        "state": "AZ",
+                        "timeZone": "MST",
+                        "street1": "5310 West Thunderbird Road",
+                        "street2": "",
+                        "suite": "Suite 301",
+                        "type": "CLI",
+                        "zip": "85306"
+                    },
+                    {
+                        "city": "Mesa",
+                        "commercialEntityName": "Banner Children's Specialists Sleep Medicine Clinic",
+                        "latitude": "33.388912",
+                        "longitude": "-111.8761",
+                        "distance": "",
+                        "email": "7278364327",
+                        "externalId": "7278364327",
+                        "facilityFee": "false",
+                        "fax": "480-412-6960",
+                        "name": "Banner Children's Specialists Sleep Medicine Clinic",
+                        "officeHours": null,
+                        "phone": "480-412-6430",
+                        "rank": "2",
+                        "state": "AZ",
+                        "timeZone": "MST",
+                        "street1": "1432 South Dobson Road",
+                        "street2": "",
+                        "suite": "Suite 509",
+                        "type": "CLI",
+                        "zip": "85202"
+                    }
+                ],
+                "id": "52392709",
+                "acceptingNewPatients": "true",
+                "ageGroupsSeen": "Pediatrics~Teenagers",
+                "approachToCare": "Rapport is key for all patients and even more so in the pediatric population. Being able to find a patient’s motivation and leverage that to achieve our sleep-related goals has been extremely helpful. When age appropriate, having the child’s understanding and “buy-in” is key to treating any health problem. I love to use diagrams, pictorials and analogies to simplify complex issues so that patient’s and their families leave the visit feeling heard, knowledgeable and empowered",
+                "boardCertifications": [
+                    {
+                        "boardName": "American Board of Pediatrics",
+                        "certificationType": "other",
+                        "specialtyName": "Pediatrics",
+                        "yearCertified": "2021"
+                    }
+                ],
+                "clinicLocationUrl": "",
+                "currentStatus": "",
+                "degrees": "MD",
+                "kyruusId": "2275811",
+                "gender": "Male",
+                "gx": {
+                    "maxAge": 6575,
+                    "minAge": 0
+                },
+                "imageUrl": "https://apiqa.bannerhealth.com/providers-images/retrieve-image?key=CnJjDp-IiSAEatgp7Dghv1NSvq6yxHzjhuLCbY9Z0iAC3tZjI2WySrVdUnYnkEm7mCEBlt_zxPu8llFB5kh2ay1Z0CCc3YdmxyyfvvpHsO2cXlreclPkxKwAaKUxStFdTBQMU8Bf_iuoknjndDvX5mBxatL9M5HkVP0UOUeYqDBrmHWcQrM55Lx-9kFBY6CSKkm4kY8dYHD4Goo_RW47KEig236boYLgZw5q3FTINhNodd5JFoJv6hmQaUYyIPJg3gwRmRnboByxn70HbE1_9Yys5nJKrSTYlXlhlOen5A4DuDMGXWGxilblToI4K-IS4dIwhAS9J9loG1ZQjABYOg",
+                "insuranceAccepted": "Banner University Family Care ALTCS~Banner Medicare Advantage HMO~Banner University Family Care ACC~Banner Medicare Advantage DSNP~Arizona Complete Health~Provider Network of America~Humana Health Plan~UPMC Health Plan~United Healthcare AZ~First Health~AZ Foundation for Medical Care~Mercy Care~Health Net Federal Services~USA Managed Care~Arizona Medical Network/PHCS/Beech Street~Health Choice of Arizona~Kaiser Permanente~Aetna Health Care~Banner Aetna~BCBS Blue Alliance (BHN Acclaim)~Imperial Insurance Co~Blue Cross and Blue Shield AZ~Care1st~United Medicare Complete~Oscar Health~P3 Health Partners~United Commercial ACO~Cigna (CAC)~AZ Complete Care (AHCCCS)~Magellan Healthcare",
+                "isLive": "true",
+                "isPrimaryCare": "false",
+                "isSpecialtyCare": "true",
+                "languages": "Spanish~English",
+                "lastModified": "Wednesday, February 12, 2025",
+                "lastUpdated": "Sunday, February 16, 2025",
+                "name": {
+                    "firstName": "Andrew",
+                    "fullName": "Andrew Rafael Valenzuela",
+                    "lastName": "Valenzuela",
+                    "middleName": "Rafael",
+                    "suffix": null
+                },
+                "networks": "BANN~BEP",
+                "optumEmploymentSubStatus": "BMG AZ",
+                "npi": "1851889232",
+                "onlineSchedulingEnabled": true,
+                "preferredName": "",
+                "providerType": "Physician",
+                "publicOnly": true,
+                "rank": 1,
+                "researchPubs": "No",
+                "ratingAndTestimonials": {
+                    "ratingAverage": 4.8,
+                    "ratingCount": 51,
+                    "testimonialCount": 16,
+                    "testimonials": [
+                        {
+                            "body": "He awesome",
+                            "rating": 5,
+                            "date": "2024-11-09"
+                        },
+                        {
+                            "body": "He is consistent with his level of care and allows for discussion and collaboration. He is encouraging and thorough with medically complex children",
+                            "rating": 5,
+                            "date": "2024-09-11"
+                        },
+                        {
+                            "body": "The Dr. was very helpful and friendly. He spoke directly to my daughter which she appreciated.",
+                            "rating": 5,
+                            "date": "2024-08-24"
+                        },
+                        {
+                            "body": "Answered all my questions and concerns, was knowledgeable and friendly.",
+                            "rating": 5,
+                            "date": "2024-08-16"
+                        },
+                        {
+                            "body": "He was calm and professional and interacted amazingly with my daughter. He also addressed all of my questions and concerns without being rude or disregarding my feelings as a parent",
+                            "rating": 5,
+                            "date": "2024-08-09"
+                        },
+                        {
+                            "body": "Great all the way around",
+                            "rating": 5,
+                            "date": "2024-08-02"
+                        },
+                        {
+                            "body": "He is patient and knowledgeable. He had some ideas for medications, but it takes a few weeks to see if they work.",
+                            "rating": 4,
+                            "date": "2024-07-06"
+                        },
+                        {
+                            "body": "Dr. Valenzuela is very knowledgeable, kind, and punctual. The staff is courteous, efficient, and positive. It is always a pleasure to go to this office.",
+                            "rating": 5,
+                            "date": "2024-06-26"
+                        },
+                        {
+                            "body": "Kind, listened to concerns, knowledgeable.",
+                            "rating": 5,
+                            "date": "2024-06-23"
+                        },
+                        {
+                            "body": "He was very professional!",
+                            "rating": 5,
+                            "date": "2024-06-17"
+                        },
+                        {
+                            "body": "I work in healthcare and find Andrew Valenzuela, MD, to be a valuable asset to the Banner Organization. His bedside manner and listening skills are superb. He made the experience informative and the quality of his care demonstrates his true passion for helping kids and families with sleep concerns.",
+                            "rating": 5,
+                            "date": "2024-06-04"
+                        },
+                        {
+                            "body": "Did a good job getting my child the help she needed",
+                            "rating": 5,
+                            "date": "2024-04-16"
+                        },
+                        {
+                            "body": "He a wonderful doctor. Communication is great and I enjoy the fact that he talks to my children directly. Using pictures to show them exactly what's going on and the way he explains everything is very understanding. All the information I get from him is very useful. He an amazing doctor.",
+                            "rating": 5,
+                            "date": "2023-08-04"
+                        },
+                        {
+                            "body": "He really helped and makes sure to explain what I don't understand.",
+                            "rating": 5,
+                            "date": "2023-07-10"
+                        },
+                        {
+                            "body": "He is amazing! Listen and found solutions other doctors couldn't. Has helped my daughter so much already!",
+                            "rating": 5,
+                            "date": "2023-06-15"
+                        },
+                        {
+                            "body": "Very great doctor, thank you so much!",
+                            "rating": 5,
+                            "date": "2023-04-03"
+                        }
+                    ]
+                },
+                "schedIntervalStartDays": 3,
+                "scopeOfPractice": "obstructive sleep apnea hypopnea~somnolence~shift work sleep disorder~sleep related hypoxemia~sleep apnea related seizure disorders~central sleep apnea~obstructive sleep apnea~sleep apnea~parasomnias~sleep deprivation~hypersomnia~sleep apnea study~multiple sleep latency testing~sleep endoscopy~sleepwalking~snoring~sleep related eating disorder~sleep talking~sleep related hallucinations~sleep phase disorder~sleep paralysis~sleep disorders~sleep-related hypoventilation~sleep abnormalities~restless legs syndrome~polysomnography~periodic limb movement disorder (plmd)~nightmares~narcolepsy~maintenance of wakefulness test~home sleep study~daytime sleepiness~continuous positive airway pressure~confusional arousals~circadian rhythm sleep disorder~bilevel positive airway pressure",
+                "specializingIn": "Sleep medicine and sleep-related concerns for all ages. This includes sleep apnea, insomnia, behavioral insomnia, children with autism and/or developmental concerns who struggle with sleep, restless legs, daytime sleepiness and narcolepsy",
+                "specialties": [
+                    {
+                        "specialty": "Pediatric Sleep Medicine",
+                        "subspecialty": []
+                    }
+                ],
+                "telehealth": "true",
+                "training": [
+                    {
+                        "city": "",
+                        "country": "",
+                        "fieldOfStudy": "Pediatrics",
+                        "graduationDate": "",
+                        "graduationYear": "2021",
+                        "name": "Children's Hospital of Austin",
+                        "rank": "",
+                        "state": "",
+                        "street1": "",
+                        "street2": "",
+                        "type": "Residency",
+                        "zip": ""
+                    },
+                    {
+                        "city": "",
+                        "country": "",
+                        "fieldOfStudy": "Sleep Medicine",
+                        "graduationDate": "",
+                        "graduationYear": "2022",
+                        "name": "Baylor College of Medicine",
+                        "rank": "",
+                        "state": "",
+                        "street1": "",
+                        "street2": "",
+                        "type": "Fellowship",
+                        "zip": ""
+                    },
+                    {
+                        "city": "",
+                        "country": "",
+                        "graduationDate": "",
+                        "graduationYear": "2018",
+                        "name": "University of Texas Health Science Center Houston",
+                        "rank": "",
+                        "state": "",
+                        "street1": "",
+                        "street2": "",
+                        "type": "Medical Education",
+                        "zip": ""
+                    }
+                ],
+                "videoUrl": "https://youtu.be/_Ub8RscadZw",
+                "visitReasons": [
+                    {
+                        "id": "9196145055",
+                        "code": "PedSleep Est FU",
+                        "durationMinutes": 10.0,
+                        "wildCardSlot": false,
+                        "source": "cerner",
+                        "consumerVisibility": "direct_book",
+                        "visitMethod": "in_person",
+                        "name": "Follow-up pediatric",
+                        "patientRelationship": "established"
+                    },
+                    {
+                        "id": "9196111429",
+                        "code": "PedSleep New",
+                        "durationMinutes": 10.0,
+                        "wildCardSlot": false,
+                        "source": "cerner",
+                        "consumerVisibility": "direct_book",
+                        "visitMethod": "in_person",
+                        "name": "New pediatric visit (Referral Required)",
+                        "patientRelationship": "new"
+                    }
+                ],
+                "webPhoneNumber": "480-412-6430"
+            }
+        ]
+    }
+}

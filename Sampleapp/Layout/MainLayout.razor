@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject HttpClient Http
 <div class="page">
     @* <div class="sidebar">
         <NavMenu />
@@ -8,10 +9,32 @@
         <div class="top-row px-4">
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
-
-        <div class="container">
-            @Body
-        </div>
-        @* TODO: Add provider component *@
+        @if(Provider != null)
+        {
+            <CascadingValue Name="ProviderInfo" Value="@Provider">
+                <div class="container">
+                    @Body
+                </div>
+                <div class="provider-container">
+                    <_MockProviderSummary />
+                </div>
+            </CascadingValue>
+        }
+        
+        
     </main>
 </div>
+
+@code
+{
+    private Result? Provider;
+
+     protected override async Task OnInitializedAsync()
+    {
+       var providerResponse = await Http.GetFromJsonAsync<Provider>("sample-data/Provider.json");
+       Provider = providerResponse?.Content?.Results?.FirstOrDefault();
+       Console.WriteLine(Provider?.Name?.LastName);
+    
+    }
+
+}

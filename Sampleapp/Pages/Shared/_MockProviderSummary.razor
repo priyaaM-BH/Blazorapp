@@ -1,0 +1,25 @@
+@inject HttpClient Http
+
+
+<h4>Provider Summary</h4>
+@if(!string.IsNullOrEmpty(FirstName))
+{
+<p>@FirstName</p>
+<p>@LastName</p>
+}
+
+
+@code
+{
+    [CascadingParameter(Name = "ProviderInfo")]
+    private Result? Provider { get; set; }
+    private string FirstName = "";
+    private string LastName = "";
+    
+    protected override async Task OnInitializedAsync()
+    {
+        FirstName = Provider?.Name?.FirstName ?? string.Empty ;
+        LastName = Provider?.Name?.LastName ?? string.Empty ;   
+    }
+    
+}

@@ -13,6 +13,20 @@
 @code {
     [Parameter]
     public string? ProviderID { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        try
+        {
+            _modelState.ProviderID = ProviderID;
+        }
+        catch (Exception e)
+        {
+            //TODO: Handle Exception
+            Console.WriteLine($"Error: {e.Message}");
+        }
+    }
     private void HandleValidSubmit(BookingFor bookingFor)
     {
         Console.WriteLine(bookingFor);
