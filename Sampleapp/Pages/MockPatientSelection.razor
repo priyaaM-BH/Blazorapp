@@ -1,4 +1,4 @@
-@page "/"
+@page "/{ProviderID}/schedule-appointment"
 @inherits BaseComponent
 @* TODO: address provider id in the route *@
 <div class="patient-selection-container">
@@ -11,6 +11,8 @@
 </div>
 
 @code {
+    [Parameter]
+    public string? ProviderID { get; set; }
     private void HandleValidSubmit(BookingFor bookingFor)
     {
         Console.WriteLine(bookingFor);
