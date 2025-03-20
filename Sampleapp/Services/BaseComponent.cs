@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using SampleApp.Models;
+using SampleApp.Models.MainStateContainers;
 
 namespace SampleApp.Services
 {

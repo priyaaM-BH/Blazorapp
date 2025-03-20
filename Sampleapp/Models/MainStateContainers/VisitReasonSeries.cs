@@ -1,5 +1,5 @@
 
-namespace SampleApp.Models
+namespace SampleApp.Models.MainStateContainers
 {
     public class VisitReasonSeries
     {
