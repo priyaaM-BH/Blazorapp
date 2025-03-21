@@ -1,0 +1,29 @@
+@page "/insurance-information"
+@inherits BaseComponent;
+<button @onclick="GoToPrevious">back</button>
+
+<h4>Insurance Information</h4>
+
+
+<div class="insurance-container">
+    <h5>Insurance</h5>
+    <p>@_InsuranceSeries.InsuranceDetailsForm.MemberId</p>
+    <p>@_InsuranceSeries.InsuranceDetailsForm.GroupNumber</p>
+    <p>@_InsuranceSeries.InsuranceDetailsForm.PoBoxZipCode</p>
+
+<button class="btn btn-primary" @onclick="HandleValidSubmit">Next</button>
+</div>
+
+
+@code
+{
+    private void HandleValidSubmit() 
+    {
+        _navigationManager.NavigateTo("/review");
+    }
+
+    private void GoToPrevious()
+    {
+        _navigationManager.NavigateTo("/insurance-details");
+    }
+}

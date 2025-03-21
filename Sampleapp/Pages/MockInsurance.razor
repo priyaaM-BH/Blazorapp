@@ -1,0 +1,32 @@
+@page "/insurance"
+
+@inherits BaseComponent;
+
+<PageTitle>Insurance</PageTitle>
+
+<button @onclick="GoToPrevious">back</button>
+<h4 class="header">Insurance</h4>
+
+<button @onclick="GoToInsuranceDetails">Yes</button>
+<button @onclick="GoToGFE">No</button>
+
+
+@code {   
+
+        private void GoToPrevious()
+        {
+            _navigationManager.NavigateTo("/select-time");
+        }
+
+        private void GoToInsuranceDetails() 
+        {
+          _InsuranceSeries.InsuranceChoice = "Yes";
+           _navigationManager.NavigateTo("/insurance-details");
+        }
+
+        private void GoToGFE() 
+        {
+           _InsuranceSeries.InsuranceChoice = "No";
+           _navigationManager.NavigateTo("/gfe");
+        }
+    }

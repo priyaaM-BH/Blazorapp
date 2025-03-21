@@ -2,6 +2,12 @@ namespace SampleApp.Models.MainStateContainers
 {
     public class InsuranceSeries
     {
-        //Everything related to insurance and gfe goes here
+        public InsuranceSeries()
+        {
+            this.InsuranceDetailsForm = new InsuranceDetailsForm();
+        }
+        public InsuranceDetailsForm? InsuranceDetailsForm { get; set; }
+        public string? InsuranceChoice { get; set; }
+        public string? GFEEmail { get; set; }
     }
 }
