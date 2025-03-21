@@ -5,7 +5,7 @@
 <PageTitle>Visit reason</PageTitle>
 
 <button @onclick="GoToPrevious">back</button>
-@if(_visitReasonPermanent.IsEditing)
+@if(_visitReasonSeries.IsEditing)
 {
     <h4 class="header">Edit Visit reason</h4>
 }
@@ -14,26 +14,26 @@ else
     <h4 class="header">Visit reason</h4>
 }
 
-<EditForm Model="@_visitReasonTemp.VisitReasonForm" OnValidSubmit="HandleValidSubmit">
+<EditForm Model="@_wipVisitReasonSeries.VisitReasonForm" OnValidSubmit="HandleValidSubmit">
     <div class="form-group">
         <label for="visitReasonName">Visit Reason Name</label>
-        <InputText id="visitReasonName" class="form-control" @bind-Value="_visitReasonTemp.VisitReasonForm.VisitReasonName" />
+        <InputText id="visitReasonName" class="form-control" @bind-Value="_wipVisitReasonSeries.VisitReasonForm.VisitReasonName" />
     </div>
 
     <div class="form-group">
         <label for="patientRelationship">Patient Relationship</label>
-        <InputText id="patientRelationship" class="form-control" @bind-Value="_visitReasonTemp.VisitReasonForm.PatientRelationship" />
+        <InputText id="patientRelationship" class="form-control" @bind-Value="_wipVisitReasonSeries.VisitReasonForm.PatientRelationship" />
     </div>
 
     <div class="form-group">
         <label for="visitMethod">Visit Method</label>
-        <InputText id="visitMethod" class="form-control" @bind-Value="_visitReasonTemp.VisitReasonForm.VisitMethod" />
-        @* <input type="checkbox" @bind="_visitReasonTemp.VisitReasonForm.VisitMethod" /> *@
+        <InputText id="visitMethod" class="form-control" @bind-Value="_wipVisitReasonSeries.VisitReasonForm.VisitMethod" />
+        @* <input type="checkbox" @bind="_wipVisitReasonSeries.VisitReasonForm.VisitMethod" /> *@
     </div>
 
     <div class="form-group">
         <label for="reasonComment">Reason Comment</label>
-        <InputTextArea id="reasonComment" class="form-control" @bind-Value="_visitReasonTemp.VisitReasonForm.ReasonComment" />
+        <InputTextArea id="reasonComment" class="form-control" @bind-Value="_wipVisitReasonSeries.VisitReasonForm.ReasonComment" />
     </div>
 
     <button class="btn btn-primary" type="submit" >Next</button>

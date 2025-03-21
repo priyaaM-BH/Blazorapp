@@ -4,7 +4,7 @@
 <PageTitle>Time selection</PageTitle>
 <button @onclick="GoToPrevious">back</button>
 <h4 class="header">Time selection</h4>
-@if(_visitReasonPermanent.IsEditing)
+@if(_visitReasonSeries.IsEditing)
 {
     <h4 class="header">Edit Appointment</h4>
 }
@@ -29,10 +29,10 @@ else
 
     private void HandleValidSubmit(string time)
     {
-        _visitReasonTemp.SelectedTime = time;
-        if(_visitReasonPermanent.IsEditing)
+        _wipVisitReasonSeries.SelectedTime = time;
+        if(_visitReasonSeries.IsEditing)
         {
-            if( _visitReasonTemp?.VisitReasonForm?.VisitMethod == "video")
+            if( _wipVisitReasonSeries?.VisitReasonForm?.VisitMethod == "video")
             {
                 _navigationManager.NavigateTo("/telehealth");
             }
@@ -45,7 +45,7 @@ else
         else
         {
             //edit visit reason flow will end here for in-person
-            _visitReasonPermanent = _visitReasonTemp;
+            _visitReasonSeries = _wipVisitReasonSeries;
             _navigationManager.NavigateTo("/insurance");
         }
         

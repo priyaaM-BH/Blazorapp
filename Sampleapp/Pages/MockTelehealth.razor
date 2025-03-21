@@ -5,7 +5,7 @@
 <button>back</button>
 <h4 class="header">Telehealth</h4>
 <label for="email">Enter email</label>
-<input id="email" type="email" @bind="_visitReasonTemp.TelehealthCommunictaionEmail" />
+<input id="email" type="email" @bind="_wipVisitReasonSeries.TelehealthCommunictaionEmail" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 <br>
 <br>
@@ -14,9 +14,9 @@
     
     private void HandleValidSubmit()
     {
-        Console.WriteLine(_visitReasonTemp.TelehealthCommunictaionEmail);
+        Console.WriteLine(_wipVisitReasonSeries.TelehealthCommunictaionEmail);
         //The visit reason ends here for telehealth intake and edit
-        _visitReasonPermanent = _visitReasonTemp;
+        _visitReasonSeries = _wipVisitReasonSeries;
         _navigationManager.NavigateTo("/review");
     }
 

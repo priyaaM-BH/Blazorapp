@@ -1,4 +1,4 @@
-@page "/{ProviderID}/schedule-appointment"
+@page "/scheduling/schedule-appointment"
 @inherits BaseComponent
 
 <div class="patient-selection-container">
@@ -13,15 +13,13 @@
 <br>
 <p>​I am a page component accessible through the NavigationManager and routing mechanisms. I have access to the cascading values I require.</p>
 @code {
-    [Parameter]
-    public string? ProviderID { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         base.OnInitialized();
         try
         {
-            _visitReasonTemp.ProviderID = ProviderID;
+           // _wipVisitReasonSeries.ProviderID = ProviderID;
         }
         catch (Exception e)
         {

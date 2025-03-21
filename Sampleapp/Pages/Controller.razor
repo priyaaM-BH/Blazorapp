@@ -1,0 +1,67 @@
+@* @page "/controller/end/{whereFrom}/{userCommitted}"
+@page "/controller/edit/{element}"
+@page "/controller/start/{providerId}" *@
+@using System.Text.Json
+@inject HttpClient Http
+@page "/scheduling/{providerId}"
+@page "/scheduling/{whereFrom}/{userCommitted}"
+@inherits BaseComponent
+
+
+<h1>Controller</h1>
+
+@code {
+    [Parameter]
+    public string? ProviderID { get; set; }
+
+    private static List<NavigationData> _navigationDataList = new List<NavigationData>();
+    private static string? _origin;
+    private bool isEditing = false;
+    [Parameter]
+    public string whereFrom { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool userCommitted { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        await OnGet();
+        if(!string.IsNullOrEmpty(ProviderID))
+        {
+            SeriesStart(ProviderID, false);
+        }
+    }
+
+
+    public async Task OnGet()
+    {
+        _navigationDataList = await Http.GetFromJsonAsync<List<NavigationData>>("NavigationData/navigationData.json");
+
+        foreach (var item in _navigationDataList)
+        {
+            Console.WriteLine($"SeriesName: {item.seriesName}, PageDirective: {item.pageDirective}");
+            Console.WriteLine("PageSections: " + string.Join(", ", item.pageSections));
+        }
+    }
+
+    public void SeriesStart(string whereFrom, bool userCommited)
+    {
+        if (whereFrom == ProviderID)
+        {
+            _navigationManager.NavigateTo("/scheduling/schedule-appointment");
+        }
+    }
+
+    //public void SeriesEnded(whereFrom, userCommitted)
+    //{
+    // switch (whereFrom)
+    // {
+    // case "":
+    // {
+    // break;
+    // }
+    // }
+
+}
+
+}

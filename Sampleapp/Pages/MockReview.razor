@@ -10,17 +10,17 @@
 
 <div class="review-container">
     <h5>visit reason data</h5>
-    <p>Visit reason Name : @_visitReasonPermanent.VisitReasonForm.VisitReasonName</p>
-    <p>PatientRelationship : @_visitReasonPermanent.VisitReasonForm.PatientRelationship</p>
-    <p>VisitMethod : @_visitReasonPermanent.VisitReasonForm.VisitMethod</p>
-    <p>ReasonComment : @_visitReasonPermanent.VisitReasonForm.ReasonComment</p>
+    <p>Visit reason Name : @_visitReasonSeries.VisitReasonForm.VisitReasonName</p>
+    <p>PatientRelationship : @_visitReasonSeries.VisitReasonForm.PatientRelationship</p>
+    <p>VisitMethod : @_visitReasonSeries.VisitReasonForm.VisitMethod</p>
+    <p>ReasonComment : @_visitReasonSeries.VisitReasonForm.ReasonComment</p>
     @* <button @onclick="() => GoToPage('visit-reason')">Edit</button> *@
     <button @onclick="GoToPage">Edit</button>
 </div>
 
 <div class="review-container">
     <h5>appt details</h5>
-    <p>Selected Time : @_visitReasonPermanent.SelectedTime</p>
+    <p>Selected Time : @_visitReasonSeries.SelectedTime</p>
 </div>
 
 <div class="review-container">
@@ -42,23 +42,23 @@
 
 <div class="review-container">
     <h5>Telehealth</h5>
-    <p>Selected Time : @_visitReasonPermanent.TelehealthCommunictaionEmail</p>
+    <p>Selected Time : @_visitReasonSeries.TelehealthCommunictaionEmail</p>
 </div>
 <br>
 <br>
 <p>​I am a page component accessible through the NavigationManager and routing mechanisms. I have access to the cascading values I require.</p>
 
-<p>editing visit reason : @_visitReasonPermanent.IsEditing</p>
+<p>editing visit reason : @_visitReasonSeries.IsEditing</p>
 @code
 {
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine(_visitReasonPermanent.ProviderID);
-        Console.WriteLine(_visitReasonTemp.ProviderID);
+        Console.WriteLine(_visitReasonSeries.ProviderID);
+        Console.WriteLine(_wipVisitReasonSeries.ProviderID);
     }
     private void GoToPage()
     {
-        _visitReasonPermanent.IsEditing = true;
+        _visitReasonSeries.IsEditing = true;
         _navigationManager.NavigateTo("/visit-reason");
     }
 
