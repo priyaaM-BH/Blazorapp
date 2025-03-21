@@ -21,7 +21,7 @@
     public string whereFrom { get; set; } = string.Empty;
 
     [Parameter]
-    public bool userCommitted { get; set; }
+    public string userCommitted { get; set; }
     protected override async Task OnInitializedAsync()
     {
         base.OnInitialized();
@@ -49,6 +49,16 @@
         if (whereFrom == ProviderID)
         {
             _navigationManager.NavigateTo("/scheduling/schedule-appointment");
+        }
+        else 
+        {
+            switch (whereFrom)
+        {
+            case "visit-reason":
+                {
+                    break;
+                }
+        }
         }
     }
 

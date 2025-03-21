@@ -29,6 +29,10 @@
     private void HandleValidSubmit(BookingFor bookingFor)
     {
         _patientInformationSeries.BookingFor = bookingFor;
-        _navigationManager.NavigateTo("/visit-reason");
+        string whereFromValue = "patientSelection";
+        bool userCommittedValue = false;
+        string targetUrl = $"/scheduling/{whereFromValue}/{userCommittedValue}";
+        _navigationManager.NavigateTo(targetUrl, forceLoad: true);
+        
     }
 }
