@@ -5,6 +5,7 @@
 @inject HttpClient Http
 @page "/scheduling/{providerId}"
 @page "/scheduling/{whereFrom}/{userCommitted}"
+@* @page "/scheduling/edit/{whereFrom}/{userCommitted:string}" *@
 @inherits BaseComponent
 
 
@@ -18,17 +19,22 @@
     private static string? _origin;
     private bool isEditing = false;
     [Parameter]
-    public string whereFrom { get; set; } = string.Empty;
+    public string? whereFrom { get; set; }
 
     [Parameter]
-    public string userCommitted { get; set; }
+    public string? userCommitted { get; set; }
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine(whereFrom);
         base.OnInitialized();
         await OnGet();
         if(!string.IsNullOrEmpty(ProviderID))
         {
-            SeriesStart(ProviderID, false);
+            SeriesStart(ProviderID, "false");
+        }
+        else
+        {
+            SeriesStart(whereFrom, userCommitted);
         }
     }
 
@@ -39,12 +45,12 @@
 
         foreach (var item in _navigationDataList)
         {
-            Console.WriteLine($"SeriesName: {item.seriesName}, PageDirective: {item.pageDirective}");
-            Console.WriteLine("PageSections: " + string.Join(", ", item.pageSections));
+           // Console.WriteLine($"SeriesName: {item.seriesName}, PageDirective: {item.pageDirective}");
+           // Console.WriteLine("PageSections: " + string.Join(", ", item.pageSections));
         }
     }
 
-    public void SeriesStart(string whereFrom, bool userCommited)
+    public void SeriesStart(string whereFrom, string userCommited)
     {
         if (whereFrom == ProviderID)
         {
@@ -53,13 +59,19 @@
         else 
         {
             switch (whereFrom)
-        {
-            case "visit-reason":
-                {
-                    break;
-                }
+            {
+                case "patientSelection":
+                    {
+                        _navigationManager.NavigateTo("/scheduling/visit-reason");
+                        break;
+                    }
+            }
         }
-        }
+    }
+
+    public void GetSeriesInformation()
+    {
+        
     }
 
     //public void SeriesEnded(whereFrom, userCommitted)

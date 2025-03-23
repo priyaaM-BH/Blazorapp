@@ -16,13 +16,14 @@
 
 @code
 {
-    [CascadingParameter(Name = "ProviderInfo")]
     private Result? Provider { get; set; }
     private string FirstName = "";
     private string LastName = "";
     
     protected override async Task OnInitializedAsync()
     {
+        var providerResponse = await Http.GetFromJsonAsync<Provider>("sample-data/Provider.json");
+        Provider = providerResponse?.Content?.Results?.FirstOrDefault();
         FirstName = Provider?.Name?.FirstName ?? string.Empty ;
         LastName = Provider?.Name?.LastName ?? string.Empty ;   
     }

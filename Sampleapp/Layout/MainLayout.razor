@@ -9,30 +9,14 @@
         <div class="top-row px-4">
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
-        @if(Provider != null)
-        {
-            <CascadingValue Name="ProviderInfo" Value="@Provider">
-                <div class="container">
-                    @Body
-                </div>
-                <div class="provider-container">
-                    <_MockProviderSummary />
-                </div>
-            </CascadingValue>
+        
+        <div class="container">
+            @Body
+        </div>
+        <div class="provider-container">
+            <_MockProviderSummary />
+        </div>
         }      
     </main>
 </div>
 
-@code
-{
-    private Result? Provider;
-
-     protected override async Task OnInitializedAsync()
-    {
-       var providerResponse = await Http.GetFromJsonAsync<Provider>("sample-data/Provider.json");
-       Provider = providerResponse?.Content?.Results?.FirstOrDefault();
-    }
-
-    //TODO: Make all the initial http calls for portal user, relationships, portal user application and cascade it
-
-}

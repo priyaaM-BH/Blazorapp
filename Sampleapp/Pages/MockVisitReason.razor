@@ -1,4 +1,4 @@
-﻿@page "/visit-reason"
+﻿@page "/scheduling/visit-reason"
 
 @inherits BaseComponent;
 
@@ -46,7 +46,7 @@ else
         private void HandleValidSubmit() 
         {
             Console.WriteLine("is editing ",ContainsEdit);
-           _navigationManager.NavigateTo("/select-time");
+           _navigationManager.NavigateTo("/scheduling/select-time");
         }
 
         private void GoToPrevious()
