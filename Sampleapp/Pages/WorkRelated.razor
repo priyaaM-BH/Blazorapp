@@ -5,7 +5,7 @@
 <button>back</button>
 <h4 class="header">work-related-claim</h4>
 <label for="workRelated">Enter information</label>
-<input id="workRelated" type="text" @bind="_wipVisitReasonSeries.WorkRelated" />
+<input id="workRelated" type="text" @bind="_wipAppointmentSeries.WorkRelated" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 <br>
 <br>
@@ -14,10 +14,12 @@
     
     private void HandleValidSubmit()
     {
-        string whereFromValue = "appointmentQuestions";
-        string currentPageDirective = "work-related";
-        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
-        _navigationManager.NavigateTo(targetUrl);
+        _navigationManager.NavigateTo("select-time");
+    }
+
+    private void GoToPrevious()
+    {
+        _navigationManager.NavigateTo("/visit-reason");
     }
 
     

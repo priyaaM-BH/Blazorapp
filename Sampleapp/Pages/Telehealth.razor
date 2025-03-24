@@ -2,22 +2,25 @@
 @inherits BaseComponent;
 
 <PageTitle>Telehealth</PageTitle>
-<button>back</button>
+<button @onClick="GoToPrevious">back</button>
 <h4 class="header">Telehealth</h4>
 <label for="email">Enter email</label>
-<input id="email" type="email" @bind="_wipVisitReasonSeries.TelehealthCommunictaionEmail" />
+<input id="email" type="email" @bind="_wipAppointmentSeries.TelehealthCommunictaionEmail" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 <br>
 <br>
 <p>​I am a page component accessible through the NavigationManager and routing mechanisms.  </p>
 @code {
-    
     private void HandleValidSubmit()
     {
-        string whereFromValue = "appointmentQuestions";
-        string currentPageDirective = "tele-health";
-        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
+        string whereFromValue = "appointment";
+        string targetUrl = $"/controller/next/{whereFromValue}";
         _navigationManager.NavigateTo(targetUrl);
+    }
+
+    private void GoToPrevious()
+    {
+        _navigationManager.NavigateTo("/select-time");
     }
 
     

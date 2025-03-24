@@ -1,106 +1,200 @@
-@* @page "/controller/end/{whereFrom}/{userCommitted}"
+@page "/controller/start/{providerId}"
+@page "/controller/next/{seriesName}"
+@page "/controller/back/{seriesName}"
 @page "/controller/edit/{element}"
-@page "/controller/start/{providerId}" *@
-@using System.Text.Json
-@inject HttpClient Http
-@page "/scheduling/{providerId}"
-@page "/scheduling/{whereFrom}/{entryPointPageDirective}"
-@page "/scheduling/{whereFrom}/{entryPointPageDirective}/{paramThree}"
-@* @page "/scheduling/edit/{whereFrom}/{userCommitted:string}" *@
 @inherits BaseComponent
-
-
-<h1>Controller</h1>
+@using System.Linq;
+@using System.Text.Json;
 
 @code {
     [Parameter]
-    public string? ProviderID { get; set; }
+    public string? providerId { get; set; }
     [Parameter]
-    public string? paramThree { get; set; }
+    public string? seriesName { get; set; } = string.Empty;
     [Parameter]
-    public string? whereFrom { get; set; }
-
-    [Parameter]
-    public string? entryPointPageDirective { get; set; }
+    public string? element { get; set; } = string.Empty;
     private static List<NavigationData> _navigationDataList = new List<NavigationData>();
-    protected override async Task OnInitializedAsync()
-    {   
+
+    protected override void OnInitialized()
+    {
         base.OnInitialized();
-        //await OnGet();
-        _navigationDataList = await OnGet();
-        string json = JsonSerializer.Serialize(_navigationDataList);
-
-        if(!string.IsNullOrEmpty(ProviderID))
+        if (providerId != null)
         {
-            IntakeSeriesStart(ProviderID, "false");
+            providerId = providerId!.ToLower();
+            _ProviderInformation.providerId = providerId;
         }
-        else
+        if (seriesName != null)
         {
-            IntakeSeriesStart(whereFrom, entryPointPageDirective, paramThree);
+            seriesName = seriesName!.ToLower();
         }
+        if (element != null)
+        {
+            seriesName = seriesName!.ToLower();
+        }
+        _navigationDataList = GetNavigationDataList();
+        //if (_navigationDataList.Any(n => n.seriesName == seriesName) == false)
+        //{
+        //    throw new ApplicationException($"Invalid value for seriesName: {seriesName}");
+        //}
+        Navigate();
     }
-
-    public async Task<List<NavigationData>> OnGet()
+    private List<NavigationData> GetNavigationDataList()
     {
-        var navigationDataList = new List<NavigationData>();
-        navigationDataList = await Http.GetFromJsonAsync<List<NavigationData>>("NavigationData/navigationData.json");
-        return navigationDataList;
+        List<NavigationData> navDataList = new();
+        NavigationData navigationData = new()
+        {
+            //date-of-birth is only for guest.
+            entryPointPageDirectives = ["patient-selection", "date-of-birth"],
+            seriesName = "patientinformation",
+        };
+        navDataList.Add(navigationData);
+
+        navigationData = new()
+        {
+            //for inperson telehealth should be skipped
+            entryPointPageDirectives = ["visit-reason", "select-time", "work-related", "tele-health"],
+            seriesName = "appointment",
+        };
+        navDataList.Add(navigationData);
+
+        navigationData = new()
+        {
+            //patient-address is only for guest
+            entryPointPageDirectives = ["patient-info", "patient-address"],
+            seriesName = "patient-information2",
+        };
+        navDataList.Add(navigationData);
+
+        navigationData = new()
+        {
+            entryPointPageDirectives = ["insurance","insurance-details", "insurance-information", "good-faith-estimate"],
+            seriesName = "insurance",
+        };
+        navDataList.Add(navigationData);
+
+        navigationData = new()
+        {
+            entryPointPageDirectives = ["review"],
+            seriesName = "review",
+        };
+        navDataList.Add(navigationData);
+
+        return navDataList;
     }
-
-    public void IntakeSeriesStart(string whereFrom, string entryPointPageDirectives, string paramThree = null)
+    private void Navigate()
     {
+        //First get the second segment in the Controller's URL.  This drives what the Controller does.
         string secondSegment = GetSecondSegment();
-        if (whereFrom == ProviderID)
+        switch (secondSegment)
         {
-            _wipVisitReasonSeries = new();
-            _navigationManager.NavigateTo($"{_navigationDataList[0].EntryPointPageDirectives[0]}");
-        }
-        else 
-        {
-            switch (secondSegment)
-            {
-                
-                case "scheduling":
-                    {
-                        int seriesIndex = _navigationDataList.FindIndex(n => n.SeriesName == whereFrom);
-                        int pageIndex = _navigationDataList.FindIndex(data => data.EntryPointPageDirectives.Contains(entryPointPageDirectives));
-                        
+            case "start":
+                {   
+                    //At the start of it all where we got the provider id.
+                    //_provider = new() { providerId = providerId! };
+                    //Reset the permanent data structures
+                    _patientInformationSeries2 = new();
+                    _patientInformationSeries = new();
+                    _appointmentSeries = new();
+                    _insuranceSeries = new();
 
-                        var entryPointPageDirectivesList = _navigationDataList[seriesIndex].EntryPointPageDirectives;
-                        int directiveIndex = entryPointPageDirectivesList.IndexOf(entryPointPageDirectives);
-                        if (seriesIndex == -1)
-                        {
-                            throw new ApplicationException($"Could not find series by name: {whereFrom}");
-                        }
+                    //Reset the wip data structures
+                    _wipPatientInformationSeries = new();
+                    _wipAppointmentSeries = new();
+                    _wipPatientInformationSeries2 = new();
+                    _wipInsuranceSeries = new();
 
-                        if(!string.IsNullOrEmpty(paramThree))
-                        {
-                            // To jump to random page in the series.
-                            _navigationManager.NavigateTo($"{paramThree}");
-                            return;
-                        }
+                    //Navigate to the first series.
+                    _navigationManager.NavigateTo($"{_navigationDataList[0].entryPointPageDirectives[0]}");
+                    //TODO Make sure all landing pages in a series has the start point parameter in the URL.
+                    return;
+                }
+            case "next":
+                {
+                    //At this time all submitted changes made to the data will be in the wip data structures.
+                    //This is a call from a series that completed.  Sophia may have been in the series to edit 
+                    //the series or be in a set of series to complete.
+                    if (_inEdit)
+                    {   //The series was in Edit mode.
+                        //Copy the relevant series' data into permanent.
+                        CopyWipToPermanent(seriesName!);
 
-                        if((pageIndex <= 0) || (entryPointPageDirectivesList.Count == (directiveIndex + 1)))
-                        {
-                            CopyWipToPermanent(whereFrom);
-                            //Console.
-                            _navigationManager.NavigateTo($"{_navigationDataList[seriesIndex + 1].EntryPointPageDirectives[0]}");
-                        }
-                        else{
-                            _navigationManager.NavigateTo($"{_navigationDataList[seriesIndex].EntryPointPageDirectives[directiveIndex + 1]}");
-                        }
-                        //More series to process.  Navigate to the next one.
+                        //Navigate to the review (last series') page.  Now we are out of Edit mode again.
+                        _inEdit = false;
+                        _navigationManager.NavigateTo($"{_navigationDataList[^1].entryPointPageDirectives[0]}");
                         return;
                     }
-            }
+
+                    //Not in edit mode.  Go to the next series.
+                    //First find out where we are.
+                    int index = _navigationDataList.FindIndex(n => n.seriesName == seriesName);
+                    if (index == -1)
+                    {
+                        throw new ApplicationException($"Could not find series by name: {seriesName}");
+                    }
+                    if (index == _navigationDataList.Count - 2)
+                    {
+                        //Next up is the Review page.  Copy all wip data to permanent and then navigate to review.
+                        for(int s = 0; s < _navigationDataList.Count - 2; s++)
+                        {
+                            CopyWipToPermanent(_navigationDataList[s].seriesName);
+                        }
+                        //Once we go to the Review page, we are out of Edit mode.
+                        _inEdit = false;
+                        _navigationManager.NavigateTo($"{_navigationDataList[^1].entryPointPageDirectives[0]}");
+                        return;
+                    }
+                    //More series to process.  Navigate to the next one.
+                    _navigationManager.NavigateTo($"{_navigationDataList[index + 1].entryPointPageDirectives[0]}");
+                    return;
+                }
+            case "back":
+                {
+                    //Sophia bailed out of a series.
+                    //She may have been in the series to edit the series or be in the series
+                    //as one in the set to complete.
+                    if (_inEdit)
+                    {
+                        //Sophia was in Edit mode in the series.  Just navigate back to the review page
+                        _navigationManager.NavigateTo($"{_navigationDataList[^1].entryPointPageDirectives[0]}");
+                        return;
+                    }
+                    //Not in Edit mode.  Go back to the previous series.
+                    int index = _navigationDataList.FindIndex(n => n.seriesName == seriesName);
+                    if (index == -1)
+                    {
+                        throw new ApplicationException($"Could not find series by name: {seriesName}");
+                    }
+                    if (index == 0)
+                    {
+                        throw new ApplicationException($"Encountered a go-back command while in the first series");
+                    }
+                    //Navigate to the previous's series' "last" page.
+                    _navigationManager.NavigateTo($"{_navigationDataList[index - 1].entryPointPageDirectives[^1]}");
+
+                    //TODO note: When Sophia clicks on any Edit button in the review page, copy all permanent data first
+                    //to the wip structures.
+
+                    //If Sophia agrees to what is in review page, the review page will save off the data which includes also
+                    //sending the insurance information to Cerner.  Then it takes Sophia to a confirmation page.  No talking
+                    //to the controller anymore.
+                    return;
+                }
+            case "edit":
+                {
+                    _inEdit = true;
+                    //Copy all series' permanent data over to wip.
+                    for (int s = 0; s < _navigationDataList.Count - 1; s++)
+                    {
+                        CopyPermanentToWip(_navigationDataList[s].seriesName);
+                    }
+                    //Navigate to the relevant page in the series
+                    string pageDirective = GetPageDirectiveForElement(element!);
+                    _navigationManager.NavigateTo(pageDirective);  //TODO These relative URLs may not work...
+                    return;
+                }
+                //TODO Do we set isEdit off under all pertinent circumstances?
         }
     }
-
-    public void GetSeriesInformation()
-    {
-        string secondSegment = GetSecondSegment();
-    }
-
     private string GetSecondSegment()
     {
         Uri.TryCreate(
@@ -115,32 +209,124 @@
         string[] segments = path.Split('/');
         if (segments.Length > 1)
         {
-            return segments[1].ToLower();
+            return segments[2].ToLower();
         }
         else
         {
             throw new ApplicationException("Second segment not found in the URL path.");
         }
     }
-
-    private void CopyWipToPermanent(string seriesName)
+    /// <summary>
+    /// This is used after Sophia clicked on an Edit button in the Review page and now i in the Controller page.
+    /// The controller page needs to know where to take Sophia to.
+    /// </summary>
+    /// <param name="element"></param>
+    /// <param name="seriesName"></param>
+    /// <param name="seriesPageDirective"></param>
+    /// <param name="startingPoint">
+    /// This is 'top' for the first page and other names/values for subsequent pages in the 
+    /// same multi-page series.
+    /// </param>
+    private string GetPageDirectiveForElement(string element)
+    {
+        NavigationData navigationData = new();
+        switch (element)
         {
-            switch (seriesName)
-            {
-                case "appointmentQuestions":
-                    {
-                        string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipVisitReasonSeries);
-                        _visitReasonSeries = System.Text.Json.JsonSerializer.Deserialize<VisitReasonSeries>(jsonData)!;
-                        return;
-                    }
-                case "insurance":
-                    {
-                        string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipInsuranceSeries);
-                        _InsuranceSeries = System.Text.Json.JsonSerializer.Deserialize<InsuranceSeries>(jsonData)!;
-                        return;
-                    }
-            }
-
+            case "visitreason":
+                {
+                    navigationData = _navigationDataList.First(n => n.seriesName == "appointment");
+                    return navigationData.entryPointPageDirectives[0];
+                }
+            case "locationandtime":
+                {
+                    navigationData = _navigationDataList.First(n => n.seriesName == "appointment");
+                    return navigationData.entryPointPageDirectives[1];
+                }
+            case "insurance":
+                {
+                    navigationData = _navigationDataList.First(n => n.seriesName == "insurance");
+                    return navigationData.entryPointPageDirectives[0];
+                }
+            default:
+                {
+                    throw new ApplicationException($"Invalid element value encountered: {element}");
+                }
+        }
     }
-
+    private void CopyPermanentToWip(string seriesName)
+    {
+        switch (seriesName)
+        {
+            case "patientinformation":
+                {
+                    string jsonData = System.Text.Json.JsonSerializer.Serialize(_patientInformationSeries);
+                    _wipPatientInformationSeries = System.Text.Json.JsonSerializer.Deserialize<PatientInformationSeries>(jsonData)!;
+                    return;
+                }
+            case "appointment":
+                {
+                    string jsonData = System.Text.Json.JsonSerializer.Serialize(_appointmentSeries);
+                    _wipAppointmentSeries = System.Text.Json.JsonSerializer.Deserialize<AppointmentSeries>(jsonData)!;
+                    return;
+                }
+            case "patientinformation2":
+                {
+                    string jsonData = System.Text.Json.JsonSerializer.Serialize(_patientInformationSeries2);
+                    _wipPatientInformationSeries2 = System.Text.Json.JsonSerializer.Deserialize<PatientInformationSeries2>(jsonData)!;
+                    return;
+                }
+            case "insurance":
+                {
+                    string jsonData = System.Text.Json.JsonSerializer.Serialize( _insuranceSeries);
+                    _wipInsuranceSeries = System.Text.Json.JsonSerializer.Deserialize<InsuranceSeries>(jsonData)!;
+                    return;
+                }
+            case "review":
+                {
+                    throw new ApplicationException("Review page should not have gotten here");
+                }
+            default:
+                {
+                    throw new ApplicationException($"Unknown series name: {seriesName}");
+                }
+        }
+    }
+    private void CopyWipToPermanent(string seriesName)
+    {
+        switch (seriesName)
+        {
+            case "patientinformation":
+                {
+                    string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipPatientInformationSeries);
+                    _patientInformationSeries = System.Text.Json.JsonSerializer.Deserialize<PatientInformationSeries>(jsonData)!;
+                    return;
+                }
+            case "appointment":
+                {
+                    string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipAppointmentSeries);
+                    _appointmentSeries = System.Text.Json.JsonSerializer.Deserialize<AppointmentSeries>(jsonData)!;
+                    return;
+                }
+            case "patientinformation2":
+                {
+                    string jsonData = System.Text.Json.JsonSerializer.Serialize(_patientInformationSeries2);
+                    _patientInformationSeries2 = System.Text.Json.JsonSerializer.Deserialize<PatientInformationSeries2>(jsonData)!;
+                    return;
+                }
+            case "insurance":
+                {
+                    string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipInsuranceSeries);
+                     _insuranceSeries = System.Text.Json.JsonSerializer.Deserialize<InsuranceSeries>(jsonData)!;
+                    return;
+                }
+            case "review":
+                {
+                    throw new ApplicationException("Review page should not have gotten here");
+                }
+            default:
+                {
+                    throw new ApplicationException($"Unknown series name: {seriesName}");
+                }
+        }
+    }
 }

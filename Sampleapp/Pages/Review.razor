@@ -5,60 +5,61 @@
 <div class="review-container">
     <h5>Who this appt</h5>
     <p>Booking for : @_patientInformationSeries.BookingFor</p>
-    <p>Booking for : @_patientInformationSeries.Name</p>
+    <p>Booking for : @_patientInformationSeries2.Name</p>
 </div>
 
 <div class="review-container">
     <h5>visit reason data</h5>
-    <p>Visit reason Name : @_visitReasonSeries.VisitReasonForm.VisitReasonName</p>
-    <p>PatientRelationship : @_visitReasonSeries.VisitReasonForm.PatientRelationship</p>
-    <p>VisitMethod : @_visitReasonSeries.VisitReasonForm.VisitMethod</p>
-    <p>ReasonComment : @_visitReasonSeries.VisitReasonForm.ReasonComment</p>
+    <p>Visit reason Name : @_appointmentSeries.VisitReasonForm.VisitReasonName</p>
+    <p>PatientRelationship : @_appointmentSeries.VisitReasonForm.PatientRelationship</p>
+    <p>VisitMethod : @_appointmentSeries.VisitReasonForm.VisitMethod</p>
+    <p>ReasonComment : @_appointmentSeries.VisitReasonForm.ReasonComment</p>
     @* <button @onclick="() => GoToPage('visit-reason')">Edit</button> *@
     <button @onclick="GoToPage">Edit</button>
 </div>
 
 <div class="review-container">
     <h5>appt details</h5>
-    <p>Selected Time : @_visitReasonSeries.SelectedTime</p>
+    <p>Selected Time : @_appointmentSeries.SelectedTime</p>
 </div>
 
 <div class="review-container">
-    @if (_InsuranceSeries.InsuranceChoice == "Yes")
+    @if (_insuranceSeries.InsuranceChoice == "Yes")
         {
             <h5>Insurance</h5>
-            <p>@_InsuranceSeries.InsuranceDetailsForm.MemberId</p>
-            <p>@_InsuranceSeries.InsuranceDetailsForm.GroupNumber</p>
-            <p>@_InsuranceSeries.InsuranceDetailsForm.PoBoxZipCode</p>
+            <p>@_insuranceSeries.InsuranceDetailsForm.MemberId</p>
+            <p>@_insuranceSeries.InsuranceDetailsForm.GroupNumber</p>
+            <p>@_insuranceSeries.InsuranceDetailsForm.PoBoxZipCode</p>
             <button @onclick="GoToInsurancePage">Edit</button>
         }
-    @if (_InsuranceSeries.InsuranceChoice == "No")
+    @if (_insuranceSeries.InsuranceChoice == "No")
         {
             <h5>GFE</h5>
-            <p>@_InsuranceSeries.GFEEmail</p>
+            <p>@_insuranceSeries.GFEEmail</p>
             <button @onclick="GoToGFEPage">Edit</button>
         }
 </div>
 
 <div class="review-container">
     <h5>Telehealth</h5>
-    <p>Selected Time : @_visitReasonSeries.TelehealthCommunictaionEmail</p>
+    <p>Selected Time : @_appointmentSeries.TelehealthCommunictaionEmail</p>
+    <button>Edit</button>
 </div>
 <br>
 <br>
-<p>​I am a page component accessible through the NavigationManager and routing mechanisms.  </p>
-
-<p>editing visit reason : @_visitReasonSeries.IsEditing</p>
+<p>​I am a page component accessible through the NavigationManager and routing mechanisms.</p>
+<p>editing visit reason : @_appointmentSeries.IsEditing</p>
 @code
 {
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine(_visitReasonSeries.ProviderID);
-        Console.WriteLine(_wipVisitReasonSeries.ProviderID);
+        //Console.WriteLine("visit reason - {0}", _appointmentSeries?.VisitReasonForm?.PatientRelationship);
+        //Console.WriteLine(_appointmentSeries.ProviderID);
+        //Console.WriteLine(_wipAppointmentSeries.ProviderID);
     }
     private void GoToPage()
     {
-        _visitReasonSeries.IsEditing = true;
+        _appointmentSeries.IsEditing = true;
         _navigationManager.NavigateTo("/visit-reason");
     }
 

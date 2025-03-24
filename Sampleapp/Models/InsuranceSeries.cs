@@ -1,4 +1,4 @@
-namespace SampleApp.Models.MainStateContainers
+namespace SampleApp.Models.s
 {
     public class InsuranceSeries
     {
