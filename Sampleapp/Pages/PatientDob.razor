@@ -2,7 +2,7 @@
 @inherits BaseComponent;
 
 <PageTitle>Telehealth</PageTitle>
-<button>back</button>
+<button @onclick="GoToPreviousPage">back</button>
 <h4 class="header">Patient date of birth</h4>
 <label for="dob">Enter date of birth</label>
 <input id="dob" type="date" @bind="_patientInformationSeries.dateOfBirth" />
@@ -14,10 +14,14 @@
     
     private void HandleValidSubmit()
     {
-        string whereFromValue = "patientSelection";
-        string currentPageDirective = "date-of-birth";
-        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
+        string whereFromValue = "patientinformation";
+        string targetUrl = $"/controller/next/{whereFromValue}";
         _navigationManager.NavigateTo(targetUrl);
+    }
+
+    private void GoToPreviousPage()
+    {
+        _navigationManager.NavigateTo("/patient-selection");
     }
 
     

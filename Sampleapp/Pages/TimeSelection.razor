@@ -4,7 +4,7 @@
 <PageTitle>Time selection</PageTitle>
 <button @onclick="GoToPrevious">back</button>
 <h4 class="header">Time selection</h4>
-@if(_visitReasonSeries.IsEditing)
+@if(_appointmentSeries.IsEditing)
 {
     <h4 class="header">Edit Appointment</h4>
 }
@@ -25,22 +25,13 @@ else
 @code {
     
     private string[] timeSlots = { "8.00", "9.00", "10.00", "11.00", "12.00", "1.00" };
-
-    protected override async Task OnInitializedAsync()
-    {
-        Console.WriteLine("visit reason - {0}", _visitReasonSeries?.VisitReasonForm?.PatientRelationship);
-    }
     private void HandleValidSubmit(string time)
     {
-        _wipVisitReasonSeries.SelectedTime = time;
-        string whereFromValue = "appointmentQuestions";
-        string currentPageDirective = "select-time";
-        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
-        _navigationManager.NavigateTo(targetUrl);
+       _navigationManager.NavigateTo("/tele-health");
     }
 
     private void GoToPrevious()
         {
-            _navigationManager.NavigateTo("/visit-reason");
+            _navigationManager.NavigateTo("/work-related");
         }
 }

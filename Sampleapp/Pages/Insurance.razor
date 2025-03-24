@@ -15,7 +15,9 @@
 
         private void GoToPrevious()
         {
-            //_navigationManager.NavigateTo("/select-time");
+            string whereFromValue = "goodFaithEstimate";
+            string targetUrl = $"/controller/back/{whereFromValue}";
+            _navigationManager.NavigateTo(targetUrl);
         }
 
         private void NavigateToInsuranceDetails()
@@ -29,19 +31,16 @@
         }
         private void GoToPage(string selection) 
         {
-           _InsuranceSeries.InsuranceChoice = "No";
-            string whereFromValue = "insurance";
-            string currentPageDirective = "insurance";
-            string paramThree = "good-faith-estimate";
             string targetUrl;
-
             if( selection == "insurance-details")
             {
-                targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
+                _wipInsuranceSeries.InsuranceChoice = "Yes";
+                targetUrl = $"good-faith-estimate";
             }
             else
             {
-                targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}/{paramThree}";
+                _wipInsuranceSeries.InsuranceChoice = "No";
+                targetUrl = $"good-faith-estimate";
             }
              _navigationManager.NavigateTo(targetUrl);
         }

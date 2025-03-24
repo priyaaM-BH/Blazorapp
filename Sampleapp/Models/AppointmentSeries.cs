@@ -1,9 +1,9 @@
 
-namespace SampleApp.Models.MainStateContainers
+namespace SampleApp.Models.s
 {
-    public class VisitReasonSeries
+    public class AppointmentSeries
     {
-        public VisitReasonSeries()
+        public AppointmentSeries()
         {
             this.VisitReasonForm = new VisitReasonForm();
         }

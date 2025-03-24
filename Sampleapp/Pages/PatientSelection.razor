@@ -1,4 +1,4 @@
-@page "/schedule-appointment"
+@page "/patient-selection"
 @inherits BaseComponent
 
 <div class="patient-selection-container">
@@ -16,18 +16,16 @@
 
     private void HandleValidSubmit(BookingFor bookingFor)
     {
-        _patientInformationSeries.BookingFor = bookingFor;
-        string whereFromValue = "patientSelection";
-        string currentPageDirective = "schedule-appointment";
-        string paramThree = "date-of-birth";
+        _wipPatientInformationSeries.BookingFor = bookingFor;
+        string whereFromValue = "patientinformation";
         string targetUrl;
         if( bookingFor == BookingFor.Guest)
         {
-            targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}/{paramThree}";
+            targetUrl = "/date-of-birth";
         }
         else
         {
-            targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
+            targetUrl = $"/controller/next/{whereFromValue}";
         }
         _navigationManager.NavigateTo(targetUrl);
         

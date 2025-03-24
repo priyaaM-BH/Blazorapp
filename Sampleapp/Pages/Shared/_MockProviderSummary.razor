@@ -1,31 +1,35 @@
 @inject HttpClient Http
-
+@inherits BaseComponent
 
 <h4>Provider Summary</h4>
-<p>Iam a global shared component. I get the Provider data through Cascading parameter </p>
-@if(!string.IsNullOrEmpty(FirstName))
-{
-    <img src="@Provider?.ImageUrl">
+<p>I am a global shared component. I get the Provider data through Cascading parameter </p>
+
+    @* <img src="https://cdn-images.kyruus.com/providermatch/banner/photos/85/esterberg-justin-1558494427.jpg"> *@
     <div>Dr 
-        <span>@FirstName</span>
-        <span>@LastName</span>
+        <span>@provider.firstName</span>
+        <span>@provider.lastName</span>
     </div>
-    <p>@string.Join(", ", Provider.Specialties.Select(specialty => specialty.SpecialtyName))</p>
-}
+    @* <p>@string.Join(", ", Provider.Specialties.Select(specialty => specialty.SpecialtyName))</p> *@
+
 
 
 @code
 {
-    private Result? Provider { get; set; }
-    private string FirstName = "";
-    private string LastName = "";
-    
+    private Provider provider { get; set; } = new();
+
     protected override async Task OnInitializedAsync()
     {
-        var providerResponse = await Http.GetFromJsonAsync<Provider>("sample-data/Provider.json");
-        Provider = providerResponse?.Content?.Results?.FirstOrDefault();
-        FirstName = Provider?.Name?.FirstName ?? string.Empty ;
-        LastName = Provider?.Name?.LastName ?? string.Empty ;   
+        provider = new()
+        {
+            firstName = "Joe",
+            lastName = "Blow",
+            providerId = "",
+            seesNewPatients = true,
+            visitReasons =
+            [
+                "reason1",
+            "reason2"
+            ]
+        };
     }
-    
 }

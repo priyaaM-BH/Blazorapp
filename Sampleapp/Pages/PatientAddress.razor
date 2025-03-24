@@ -2,16 +2,22 @@
 @inherits BaseComponent;
 
 <h4>Patient Information</h4>
+<button @onClick="GoToPrevious">back</button>
 <label for="address">Enter name</label>
-<input id="address" type="text" @bind="_patientInformationSeries.Address" />
+<input id="address" type="text" @bind="_wipPatientInformationSeries2.Address" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 @code 
 {
-private void HandleValidSubmit()
+    private void HandleValidSubmit()
     {
-        string whereFromValue = "appointmentQuestions";
-        string currentPageDirective = "patient-address";
-        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
+        string whereFromValue = "patient-information2";
+        string targetUrl = $"/controller/next/{whereFromValue}";
         _navigationManager.NavigateTo(targetUrl);
     }
+
+    private void GoToPrevious()
+    {
+        _navigationManager.NavigateTo("patient-info");
+    }
+
 }

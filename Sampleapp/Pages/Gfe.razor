@@ -5,22 +5,27 @@
 <button @onclick="GoToPrevious">back</button>
 <h4 class="header">GFE</h4>
 <label for="email">Enter email</label>
-<input id="email" type="email" @bind="_InsuranceSeries.GFEEmail" />
+<input id="email" type="email" @bind="_wipInsuranceSeries.GFEEmail" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 
 @code {
-    
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("visit reason - {0}", _appointmentSeries?.VisitReasonForm?.PatientRelationship);
+        //Console.WriteLine(_appointmentSeries.ProviderID);
+        //Console.WriteLine(_wipAppointmentSeries.ProviderID);
+    }
     private void HandleValidSubmit()
     {
-        string whereFromValue = "goodFaithEstimate";
-        string currentPageDirective = "good-faith-estimate";
-        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
-        _navigationManager.NavigateTo(targetUrl);
+        //string whereFromValue = "insurance";
+        //string targetUrl = $"/controller/next/{whereFromValue}";
+        //_navigationManager.NavigateTo(targetUrl);
+        _navigationManager.NavigateTo("/review");
     }
-
     private void GoToPrevious()
     {
-        //_navigationManager.NavigateTo("/select-time");
+        _navigationManager.NavigateTo("/insurance");
     }
 
     

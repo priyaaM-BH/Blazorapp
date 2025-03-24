@@ -2,16 +2,26 @@
 @inherits BaseComponent;
 
 <h4>Patient Information</h4>
+<button @onClick="GoToPrevious">back</button>
 <label for="name">Enter name</label>
-<input id="name" type="text" @bind="_patientInformationSeries.Name" />
-<button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
+<input id="name" type="text" @bind="_wipPatientInformationSeries2.Name" />
+<button class="btn btn-primary" @onclick="HandleValidSubmit">Next</button>
 @code 
 {
-private void HandleValidSubmit()
+    protected override async Task OnInitializedAsync()
     {
-        string whereFromValue = "appointmentQuestions";
-        string currentPageDirective = "patient-info";
-        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
+        Console.WriteLine("visit reason - {0}", _appointmentSeries?.VisitReasonForm?.PatientRelationship);
+        //Console.WriteLine(_appointmentSeries.ProviderID);
+        //Console.WriteLine(_wipAppointmentSeries.ProviderID);
+    }
+    private void GoToPrevious()
+    {
+        string whereFromValue = "patient-information2";
+        string targetUrl = $"/controller/back/{whereFromValue}";
         _navigationManager.NavigateTo(targetUrl);
+    }
+    private void HandleValidSubmit()
+    {
+        _navigationManager.NavigateTo("/patient-address");
     }
 }
