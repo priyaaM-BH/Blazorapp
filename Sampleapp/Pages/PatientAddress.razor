@@ -1,0 +1,17 @@
+@page "/patient-address"
+@inherits BaseComponent;
+
+<h4>Patient Information</h4>
+<label for="address">Enter name</label>
+<input id="address" type="text" @bind="_patientInformationSeries.Address" />
+<button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
+@code 
+{
+private void HandleValidSubmit()
+    {
+        string whereFromValue = "appointmentQuestions";
+        string currentPageDirective = "patient-address";
+        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
+        _navigationManager.NavigateTo(targetUrl);
+    }
+}

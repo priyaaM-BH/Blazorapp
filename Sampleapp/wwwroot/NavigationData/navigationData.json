@@ -8,13 +8,15 @@
         "seriesName": "appointmentQuestions"
     },
     {
-        "entryPointPageDirectives": ["insurance","insurance-details", "insurance-information", "good-faith-estimate"],
+        "entryPointPageDirectives": ["insurance","insurance-details", "insurance-information"],
         "seriesName": "insurance"
+    },
+    {
+        "entryPointPageDirectives": ["good-faith-estimate"],
+        "seriesName": "goodFaithEstimate"
     },
     {
         "entryPointPageDirectives": ["review"],
         "seriesName": "review"
     }
-
-
 ]

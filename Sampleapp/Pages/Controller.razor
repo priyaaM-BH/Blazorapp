@@ -68,7 +68,6 @@
 
                         var entryPointPageDirectivesList = _navigationDataList[seriesIndex].EntryPointPageDirectives;
                         int directiveIndex = entryPointPageDirectivesList.IndexOf(entryPointPageDirectives);
-                        Console.WriteLine("directiveIndex - {0}",directiveIndex);
                         if (seriesIndex == -1)
                         {
                             throw new ApplicationException($"Could not find series by name: {whereFrom}");
@@ -83,7 +82,7 @@
 
                         if((pageIndex <= 0) || (entryPointPageDirectivesList.Count == (directiveIndex + 1)))
                         {
-                            CopyPermanentToWip(whereFrom);
+                            CopyWipToPermanent(whereFrom);
                             //Console.
                             _navigationManager.NavigateTo($"{_navigationDataList[seriesIndex + 1].EntryPointPageDirectives[0]}");
                         }
@@ -124,7 +123,7 @@
         }
     }
 
-    private void CopyPermanentToWip(string seriesName)
+    private void CopyWipToPermanent(string seriesName)
         {
             switch (seriesName)
             {
@@ -142,26 +141,6 @@
                     }
             }
 
-    }
-
-    public void NavigateToRandomPage()
-    {
-        Random random = new Random();
-
-        // Randomly pick a series
-        int randomSeriesIndex = random.Next(_navigationDataList.Count);
-
-        // Get the selected series
-        var selectedSeries = _navigationDataList[randomSeriesIndex];
-
-        // Randomly pick an entry point page within the selected series
-        int randomPageIndex = random.Next(selectedSeries.EntryPointPageDirectives.Count);
-
-        // Get the random entry point page directive
-        string randomPageDirective = selectedSeries.EntryPointPageDirectives[randomPageIndex];
-
-        // Navigate to the random entry point page
-        _navigationManager.NavigateTo(randomPageDirective);
     }
 
 }

@@ -9,4 +9,5 @@ public class PatientInformationSeries
     public string? portalUserId { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public DateOnly dateOfBirth { get; set; }
+    public string Address { get; set; } = string.Empty;
 }

@@ -12,7 +12,7 @@
     
     private void HandleValidSubmit()
     {
-        string whereFromValue = "insurance";
+        string whereFromValue = "goodFaithEstimate";
         string currentPageDirective = "good-faith-estimate";
         string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
         _navigationManager.NavigateTo(targetUrl);

@@ -14,7 +14,7 @@
     
     private void HandleValidSubmit()
     {
-        string whereFromValue = "appointmentQuestions";
+        string whereFromValue = "patientSelection";
         string currentPageDirective = "date-of-birth";
         string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
         _navigationManager.NavigateTo(targetUrl);
