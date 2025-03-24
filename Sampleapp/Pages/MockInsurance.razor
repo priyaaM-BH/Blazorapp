@@ -20,8 +20,10 @@
 
         private void GoToInsuranceDetails() 
         {
-          _InsuranceSeries.InsuranceChoice = "Yes";
-           _navigationManager.NavigateTo("/insurance-details");
+            string whereFromValue = "insurance";
+            string entryPointPageDirectives = "insurance";
+            string targetUrl = $"/scheduling/{whereFromValue}/{entryPointPageDirectives}";
+            _navigationManager.NavigateTo(targetUrl);
         }
 
         private void GoToGFE() 

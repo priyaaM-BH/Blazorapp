@@ -12,6 +12,5 @@ namespace SampleApp.Models.MainStateContainers
         public string? SelectedTime { get; set; }
         public string? TelehealthCommunictaionEmail { get; set; }
         public bool IsEditing { get; set; }
-
     }
 }

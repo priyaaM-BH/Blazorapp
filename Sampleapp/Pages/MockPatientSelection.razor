@@ -1,4 +1,4 @@
-@page "/scheduling/schedule-appointment"
+@page "/schedule-appointment"
 @inherits BaseComponent
 
 <div class="patient-selection-container">
@@ -19,7 +19,7 @@
         base.OnInitialized();
         try
         {
-           // _wipVisitReasonSeries.ProviderID = ProviderID;
+           //_wipVisitReasonSeries.ProviderID = ProviderID;
         }
         catch (Exception e)
         {
@@ -30,9 +30,9 @@
     {
         _patientInformationSeries.BookingFor = bookingFor;
         string whereFromValue = "patientSelection";
-        bool userCommittedValue = false;
-        string targetUrl = $"/scheduling/{whereFromValue}/{userCommittedValue}";
-        _navigationManager.NavigateTo(targetUrl, forceLoad: true);
+        string pageDirective = "schedule-appointment";
+        string targetUrl = $"/scheduling/{whereFromValue}/{pageDirective}";
+        _navigationManager.NavigateTo(targetUrl);
         
     }
 }

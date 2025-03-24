@@ -4,7 +4,7 @@
 @using System.Text.Json
 @inject HttpClient Http
 @page "/scheduling/{providerId}"
-@page "/scheduling/{whereFrom}/{userCommitted}"
+@page "/scheduling/{whereFrom}/{entryPointPageDirective}"
 @* @page "/scheduling/edit/{whereFrom}/{userCommitted:string}" *@
 @inherits BaseComponent
 
@@ -22,48 +22,69 @@
     public string? whereFrom { get; set; }
 
     [Parameter]
-    public string? userCommitted { get; set; }
+    public string? entryPointPageDirective { get; set; }
     protected override async Task OnInitializedAsync()
-    {
-        Console.WriteLine(whereFrom);
+    {   
         base.OnInitialized();
-        await OnGet();
+        //await OnGet();
+        _navigationDataList = await OnGet();
+        string json = JsonSerializer.Serialize(_navigationDataList);
+
         if(!string.IsNullOrEmpty(ProviderID))
         {
-            SeriesStart(ProviderID, "false");
+            IntakeSeriesStart(ProviderID, "false");
         }
         else
         {
-            SeriesStart(whereFrom, userCommitted);
+            IntakeSeriesStart(whereFrom, entryPointPageDirective);
         }
     }
 
-
-    public async Task OnGet()
+    public async Task<List<NavigationData>> OnGet()
     {
-        _navigationDataList = await Http.GetFromJsonAsync<List<NavigationData>>("NavigationData/navigationData.json");
-
-        foreach (var item in _navigationDataList)
-        {
-           // Console.WriteLine($"SeriesName: {item.seriesName}, PageDirective: {item.pageDirective}");
-           // Console.WriteLine("PageSections: " + string.Join(", ", item.pageSections));
-        }
+        var navigationDataList = new List<NavigationData>();
+        navigationDataList = await Http.GetFromJsonAsync<List<NavigationData>>("NavigationData/navigationData.json");
+        return navigationDataList;
     }
 
-    public void SeriesStart(string whereFrom, string userCommited)
+    public void IntakeSeriesStart(string whereFrom, string entryPointPageDirectives)
     {
+        string secondSegment = GetSecondSegment();
         if (whereFrom == ProviderID)
         {
-            _navigationManager.NavigateTo("/scheduling/schedule-appointment");
+            _wipVisitReasonSeries = new();
+            _navigationManager.NavigateTo($"{_navigationDataList[0].EntryPointPageDirectives[0]}");
+
         }
         else 
         {
-            switch (whereFrom)
+            switch (secondSegment)
             {
-                case "patientSelection":
+                
+                case "scheduling":
                     {
-                        _navigationManager.NavigateTo("/scheduling/visit-reason");
-                        break;
+                        int seriesIndex = _navigationDataList.FindIndex(n => n.SeriesName == whereFrom);
+                        int pageIndex = _navigationDataList.FindIndex(data => data.EntryPointPageDirectives.Contains(entryPointPageDirectives));
+                        
+
+                        var entryPointPageDirectivesList = _navigationDataList[seriesIndex].EntryPointPageDirectives;
+                        int directiveIndex = entryPointPageDirectivesList.IndexOf(entryPointPageDirectives);
+                        
+                        if (seriesIndex == -1)
+                        {
+                            throw new ApplicationException($"Could not find series by name: {whereFrom}");
+                        }
+
+                        if((pageIndex <= 0) || (entryPointPageDirectivesList.Count == (directiveIndex + 1)))
+                        {
+                            CopyPermanentToWip(whereFrom);
+                            _navigationManager.NavigateTo($"{_navigationDataList[seriesIndex + 1].EntryPointPageDirectives[0]}");
+                        }
+                        else{
+                            _navigationManager.NavigateTo($"{_navigationDataList[seriesIndex].EntryPointPageDirectives[directiveIndex + 1]}");
+                        }
+                        //More series to process.  Navigate to the next one.
+                        return;
                     }
             }
         }
@@ -71,19 +92,49 @@
 
     public void GetSeriesInformation()
     {
-        
+        string secondSegment = GetSecondSegment();
     }
 
-    //public void SeriesEnded(whereFrom, userCommitted)
-    //{
-    // switch (whereFrom)
-    // {
-    // case "":
-    // {
-    // break;
-    // }
-    // }
+    private string GetSecondSegment()
+    {
+        Uri.TryCreate(
+            _navigationManager.Uri, 
+            UriKind.Absolute, 
+            out Uri? uri);
+        if (uri == null)
+        {
+            throw new ApplicationException($"Unable to parse the URL: {_navigationManager.Uri}");
+        }
+        string path = uri.AbsolutePath.TrimEnd('/');
+        string[] segments = path.Split('/');
+        if (segments.Length > 1)
+        {
+            return segments[1].ToLower();
+        }
+        else
+        {
+            throw new ApplicationException("Second segment not found in the URL path.");
+        }
+    }
 
-}
+    private void CopyPermanentToWip(string seriesName)
+        {
+            switch (seriesName)
+            {
+                case "visitReason":
+                    {
+                        string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipVisitReasonSeries);
+                        _visitReasonSeries = System.Text.Json.JsonSerializer.Deserialize<VisitReasonSeries>(jsonData)!;
+                        return;
+                    }
+                case "insurance":
+                    {
+                        string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipInsuranceSeries);
+                        _InsuranceSeries = System.Text.Json.JsonSerializer.Deserialize<InsuranceSeries>(jsonData)!;
+                        return;
+                    }
+            }
+
+    }
 
 }

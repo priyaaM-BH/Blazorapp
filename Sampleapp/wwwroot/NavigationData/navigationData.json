@@ -1,17 +1,19 @@
 [
-  {
-    "seriesName": "patientSelection",
-    "entryPointPageDirectives": "/schedule-appointment"
-  },
-  {
-    "seriesName": "visitReason",
-    "entryPointPageDirectives": ["/visit-reason", "select-time"]
-  },
-  {
-    "seriesName": "insurance",
-    "entryPointPageDirectives": [
-      "/insurance-information",
-      "/insurance-details"
-    ]
-  }
+    {
+      "entryPointPageDirectives": ["schedule-appointment"],
+      "seriesName": "patientSelection"
+    },
+    {
+      "entryPointPageDirectives": ["visit-reason", "select-time","patient-info","tele-health"],
+      "seriesName": "visitReason"
+    },
+    {
+      "entryPointPageDirectives": ["insurance","insurance-details", "insurance-information"],
+      "seriesName": "insurance"
+    },
+    {
+        "entryPointPageDirectives": ["review"],
+        "seriesName": "review"
+      }
+
 ]

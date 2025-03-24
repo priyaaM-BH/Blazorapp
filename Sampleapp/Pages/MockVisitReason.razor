@@ -1,4 +1,5 @@
-﻿@page "/scheduling/visit-reason"
+﻿@* @page "/visit-reason" *@
+@page "/visit-reason"
 
 @inherits BaseComponent;
 
@@ -41,12 +42,20 @@ else
 <br>
 <br>
 <p>​I am a page component accessible through the NavigationManager and routing mechanisms. I have access to the cascading values I require.</p>
-@code {   
+@code {  
+        private string? whereFrom { get; set; } 
         private bool ContainsEdit => _navigationManager.Uri.Contains("edit", StringComparison.OrdinalIgnoreCase);
         private void HandleValidSubmit() 
         {
-            Console.WriteLine("is editing ",ContainsEdit);
-           _navigationManager.NavigateTo("/scheduling/select-time");
+            if(_wipVisitReasonSeries?.VisitReasonForm?.VisitMethod?.ToLower() == "video")
+            {
+                _isTeleHealth = true;
+                //Console.WriteLine(_isTeleHealth);
+            }
+            string whereFromValue = "visitReason";
+            string entryPointPageDirectives = "visit-reason";
+            string targetUrl = $"/scheduling/{whereFromValue}/{entryPointPageDirectives}";
+            _navigationManager.NavigateTo(targetUrl);
         }
 
         private void GoToPrevious()

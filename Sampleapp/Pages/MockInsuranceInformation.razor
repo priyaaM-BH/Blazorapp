@@ -19,7 +19,10 @@
 {
     private void HandleValidSubmit() 
     {
-        _navigationManager.NavigateTo("/review");
+        string whereFromValue = "insurance";
+        string entryPointPageDirectives = "insurance-information";
+        string targetUrl = $"/scheduling/{whereFromValue}/{entryPointPageDirectives}";
+        _navigationManager.NavigateTo(targetUrl);
     }
 
     private void GoToPrevious()

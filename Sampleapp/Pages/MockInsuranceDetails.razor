@@ -6,20 +6,20 @@
 
 <button @onclick="GoToPrevious">back</button>
 <h4 class="header">Insurance Details</h4>
-<EditForm Model="@_InsuranceSeries.InsuranceDetailsForm" OnValidSubmit="HandleValidSubmit">
+<EditForm Model="@_wipInsuranceSeries.InsuranceDetailsForm" OnValidSubmit="HandleValidSubmit">
     <div class="form-group">
         <label for="memberId">Member ID</label>
-        <InputText id="memberId" class="form-control" @bind-Value="_InsuranceSeries.InsuranceDetailsForm.MemberId" />
+        <InputText id="memberId" class="form-control" @bind-Value="_wipInsuranceSeries.InsuranceDetailsForm.MemberId" />
     </div>
 
     <div class="form-group">
         <label for="groupNumber">Group Number</label>
-        <InputText id="groupNumber" class="form-control" @bind-Value="_InsuranceSeries.InsuranceDetailsForm.GroupNumber" />
+        <InputText id="groupNumber" class="form-control" @bind-Value="_wipInsuranceSeries.InsuranceDetailsForm.GroupNumber" />
     </div>
 
     <div class="form-group">
         <label for="poBoxZipCode">PO Box and ZIP Code</label>
-        <InputText id="poBoxZipCode" class="form-control" @bind-Value="_InsuranceSeries.InsuranceDetailsForm.PoBoxZipCode" />
+        <InputText id="poBoxZipCode" class="form-control" @bind-Value="_wipInsuranceSeries.InsuranceDetailsForm.PoBoxZipCode" />
     </div>
 
     <button class="btn btn-primary" type="submit" >Next</button>
@@ -28,7 +28,10 @@
 @code {   
         private void HandleValidSubmit() 
         {
-           _navigationManager.NavigateTo("/insurance-information");
+            string whereFromValue = "insurance";
+            string entryPointPageDirectives = "insurance-details";
+            string targetUrl = $"/scheduling/{whereFromValue}/{entryPointPageDirectives}";
+            _navigationManager.NavigateTo(targetUrl);
         }
 
         private void GoToPrevious()

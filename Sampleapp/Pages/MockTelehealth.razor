@@ -1,4 +1,4 @@
-﻿@page "/telehealth"
+﻿@page "/tele-health"
 @inherits BaseComponent;
 
 <PageTitle>Telehealth</PageTitle>
@@ -14,10 +14,10 @@
     
     private void HandleValidSubmit()
     {
-        Console.WriteLine(_wipVisitReasonSeries.TelehealthCommunictaionEmail);
-        //The visit reason ends here for telehealth intake and edit
-        _visitReasonSeries = _wipVisitReasonSeries;
-        _navigationManager.NavigateTo("/review");
+        string whereFromValue = "visitReason";
+        string entryPointPageDirectives = "tele-health";
+        string targetUrl = $"/scheduling/{whereFromValue}/{entryPointPageDirectives}";
+        _navigationManager.NavigateTo(targetUrl);
     }
 
     

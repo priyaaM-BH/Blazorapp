@@ -9,6 +9,9 @@
 {
 private void HandleValidSubmit()
     {
-        _navigationManager.NavigateTo("/telehealth");
+        string whereFromValue = "visitReason";
+        string pageDirective = "patient-info";
+        string targetUrl = $"/scheduling/{whereFromValue}/{pageDirective}";
+        _navigationManager.NavigateTo(targetUrl);
     }
 }
