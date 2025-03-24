@@ -20,7 +20,7 @@ else
 }
 <br>
 <br>
-<p>​I am a page component accessible through the NavigationManager and routing mechanisms. I have access to the cascading values I require.</p>
+<p>​I am a page component accessible through the NavigationManager and routing mechanisms.  </p>
 
 @code {
     
@@ -33,9 +33,9 @@ else
     private void HandleValidSubmit(string time)
     {
         _wipVisitReasonSeries.SelectedTime = time;
-        string whereFromValue = "visitReason";
-        string entryPointPageDirectives = "select-time";
-        string targetUrl = $"/scheduling/{whereFromValue}/{entryPointPageDirectives}";
+        string whereFromValue = "appointmentQuestions";
+        string currentPageDirective = "select-time";
+        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
         _navigationManager.NavigateTo(targetUrl);
     }
 

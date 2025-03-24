@@ -20,8 +20,8 @@
     private void HandleValidSubmit() 
     {
         string whereFromValue = "insurance";
-        string entryPointPageDirectives = "insurance-information";
-        string targetUrl = $"/scheduling/{whereFromValue}/{entryPointPageDirectives}";
+        string currentPageDirective = "insurance-information";
+        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
         _navigationManager.NavigateTo(targetUrl);
     }
 

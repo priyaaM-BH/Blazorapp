@@ -9,9 +9,9 @@
 {
 private void HandleValidSubmit()
     {
-        string whereFromValue = "visitReason";
-        string pageDirective = "patient-info";
-        string targetUrl = $"/scheduling/{whereFromValue}/{pageDirective}";
+        string whereFromValue = "appointmentQuestions";
+        string currentPageDirective = "patient-info";
+        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
         _navigationManager.NavigateTo(targetUrl);
     }
 }

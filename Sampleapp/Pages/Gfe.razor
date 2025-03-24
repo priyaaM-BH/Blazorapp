@@ -1,4 +1,4 @@
-@page "/gfe"
+@page "/good-faith-estimate"
 @inherits BaseComponent;
 
 <PageTitle>GFE</PageTitle>
@@ -12,12 +12,15 @@
     
     private void HandleValidSubmit()
     {
-        _navigationManager.NavigateTo("/review");
+        string whereFromValue = "insurance";
+        string currentPageDirective = "good-faith-estimate";
+        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
+        _navigationManager.NavigateTo(targetUrl);
     }
 
     private void GoToPrevious()
     {
-        _navigationManager.NavigateTo("/select-time");
+        //_navigationManager.NavigateTo("/select-time");
     }
 
     

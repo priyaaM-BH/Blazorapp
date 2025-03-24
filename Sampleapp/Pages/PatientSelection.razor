@@ -1,0 +1,35 @@
+@page "/schedule-appointment"
+@inherits BaseComponent
+
+<div class="patient-selection-container">
+    @foreach (BookingFor bookingOption in Enum.GetValues(typeof(BookingFor)))
+    {
+        <button class="btn btn-primary" type="button" @onclick="() => HandleValidSubmit(bookingOption)">
+            @bookingOption
+        </button>
+    }
+</div>
+<br>
+<br>
+<p>​I am a page component accessible through the NavigationManager and routing mechanisms.  </p>
+@code {
+
+    private void HandleValidSubmit(BookingFor bookingFor)
+    {
+        _patientInformationSeries.BookingFor = bookingFor;
+        string whereFromValue = "patientSelection";
+        string currentPageDirective = "schedule-appointment";
+        string paramThree = "date-of-birth";
+        string targetUrl;
+        if( bookingFor == BookingFor.Guest)
+        {
+            targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}/{paramThree}";
+        }
+        else
+        {
+            targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
+        }
+        _navigationManager.NavigateTo(targetUrl);
+        
+    }
+}

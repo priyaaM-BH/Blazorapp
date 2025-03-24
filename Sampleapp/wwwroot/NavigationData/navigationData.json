@@ -1,19 +1,24 @@
 [
     {
-      "entryPointPageDirectives": ["schedule-appointment"],
-      "seriesName": "patientSelection"
+        "entryPointPageDirectives": ["schedule-appointment"],
+        "seriesName": "patientSelection"
     },
     {
-      "entryPointPageDirectives": ["visit-reason", "select-time","patient-info","tele-health"],
-      "seriesName": "visitReason"
+        "entryPointPageDirectives": ["visit-reason", "work-related", "select-time", "patient-info", "tele-health"],
+        "seriesName": "appointmentQuestions"
     },
     {
-      "entryPointPageDirectives": ["insurance","insurance-details", "insurance-information"],
-      "seriesName": "insurance"
+        "entryPointPageDirectives": ["insurance","insurance-details", "insurance-information"],
+        "seriesName": "insurance"
     },
     {
         "entryPointPageDirectives": ["review"],
         "seriesName": "review"
-      }
+    },
+    {
+        "entryPointPageDirectives": ["date-of-birth", "good-faith-estimate"],
+        "seriesName": "randomPages"
+    }
+
 
 ]

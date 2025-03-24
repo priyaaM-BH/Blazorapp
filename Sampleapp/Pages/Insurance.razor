@@ -1,0 +1,48 @@
+@page "/insurance"
+
+@inherits BaseComponent;
+
+<PageTitle>Insurance</PageTitle>
+
+<button @onclick="GoToPrevious">back</button>
+<h4 class="header">Insurance</h4>
+
+<button @onclick="NavigateToInsuranceDetails">Yes</button>
+<button @onclick="NavigateToGoodFaithEstimate">No</button>
+
+
+@code {   
+
+        private void GoToPrevious()
+        {
+            //_navigationManager.NavigateTo("/select-time");
+        }
+
+        private void NavigateToInsuranceDetails()
+        {
+            GoToPage("insurance-details");
+        }
+
+        private void NavigateToGoodFaithEstimate()
+        {
+            GoToPage("good-faith-estimate");
+        }
+        private void GoToPage(string selection) 
+        {
+           _InsuranceSeries.InsuranceChoice = "No";
+            string whereFromValue = "insurance";
+            string currentPageDirective = "insurance";
+            string paramThree = "good-faith-estimate";
+            string targetUrl;
+
+            if( selection == "insurance-details")
+            {
+                targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
+            }
+            else
+            {
+                targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}/{paramThree}";
+            }
+             _navigationManager.NavigateTo(targetUrl);
+        }
+    }

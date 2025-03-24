@@ -5,6 +5,7 @@
 @inject HttpClient Http
 @page "/scheduling/{providerId}"
 @page "/scheduling/{whereFrom}/{entryPointPageDirective}"
+@page "/scheduling/{whereFrom}/{entryPointPageDirective}/{paramThree}"
 @* @page "/scheduling/edit/{whereFrom}/{userCommitted:string}" *@
 @inherits BaseComponent
 
@@ -14,15 +15,14 @@
 @code {
     [Parameter]
     public string? ProviderID { get; set; }
-
-    private static List<NavigationData> _navigationDataList = new List<NavigationData>();
-    private static string? _origin;
-    private bool isEditing = false;
+    [Parameter]
+    public string? paramThree { get; set; }
     [Parameter]
     public string? whereFrom { get; set; }
 
     [Parameter]
     public string? entryPointPageDirective { get; set; }
+    private static List<NavigationData> _navigationDataList = new List<NavigationData>();
     protected override async Task OnInitializedAsync()
     {   
         base.OnInitialized();
@@ -36,7 +36,7 @@
         }
         else
         {
-            IntakeSeriesStart(whereFrom, entryPointPageDirective);
+            IntakeSeriesStart(whereFrom, entryPointPageDirective, paramThree);
         }
     }
 
@@ -47,14 +47,13 @@
         return navigationDataList;
     }
 
-    public void IntakeSeriesStart(string whereFrom, string entryPointPageDirectives)
+    public void IntakeSeriesStart(string whereFrom, string entryPointPageDirectives, string paramThree = null)
     {
         string secondSegment = GetSecondSegment();
         if (whereFrom == ProviderID)
         {
             _wipVisitReasonSeries = new();
             _navigationManager.NavigateTo($"{_navigationDataList[0].EntryPointPageDirectives[0]}");
-
         }
         else 
         {
@@ -69,15 +68,23 @@
 
                         var entryPointPageDirectivesList = _navigationDataList[seriesIndex].EntryPointPageDirectives;
                         int directiveIndex = entryPointPageDirectivesList.IndexOf(entryPointPageDirectives);
-                        
+                        Console.WriteLine("directiveIndex - {0}",directiveIndex);
                         if (seriesIndex == -1)
                         {
                             throw new ApplicationException($"Could not find series by name: {whereFrom}");
                         }
 
+                        if(!string.IsNullOrEmpty(paramThree))
+                        {
+                            // To jump to random page in the series.
+                            _navigationManager.NavigateTo($"{paramThree}");
+                            return;
+                        }
+
                         if((pageIndex <= 0) || (entryPointPageDirectivesList.Count == (directiveIndex + 1)))
                         {
                             CopyPermanentToWip(whereFrom);
+                            //Console.
                             _navigationManager.NavigateTo($"{_navigationDataList[seriesIndex + 1].EntryPointPageDirectives[0]}");
                         }
                         else{
@@ -121,7 +128,7 @@
         {
             switch (seriesName)
             {
-                case "visitReason":
+                case "appointmentQuestions":
                     {
                         string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipVisitReasonSeries);
                         _visitReasonSeries = System.Text.Json.JsonSerializer.Deserialize<VisitReasonSeries>(jsonData)!;
@@ -135,6 +142,26 @@
                     }
             }
 
+    }
+
+    public void NavigateToRandomPage()
+    {
+        Random random = new Random();
+
+        // Randomly pick a series
+        int randomSeriesIndex = random.Next(_navigationDataList.Count);
+
+        // Get the selected series
+        var selectedSeries = _navigationDataList[randomSeriesIndex];
+
+        // Randomly pick an entry point page within the selected series
+        int randomPageIndex = random.Next(selectedSeries.EntryPointPageDirectives.Count);
+
+        // Get the random entry point page directive
+        string randomPageDirective = selectedSeries.EntryPointPageDirectives[randomPageIndex];
+
+        // Navigate to the random entry point page
+        _navigationManager.NavigateTo(randomPageDirective);
     }
 
 }

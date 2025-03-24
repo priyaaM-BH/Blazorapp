@@ -41,7 +41,7 @@ else
 </EditForm>
 <br>
 <br>
-<p>​I am a page component accessible through the NavigationManager and routing mechanisms. I have access to the cascading values I require.</p>
+<p>​I am a page component accessible through the NavigationManager and routing mechanisms.  </p>
 @code {  
         private string? whereFrom { get; set; } 
         private bool ContainsEdit => _navigationManager.Uri.Contains("edit", StringComparison.OrdinalIgnoreCase);
@@ -52,9 +52,9 @@ else
                 _isTeleHealth = true;
                 //Console.WriteLine(_isTeleHealth);
             }
-            string whereFromValue = "visitReason";
-            string entryPointPageDirectives = "visit-reason";
-            string targetUrl = $"/scheduling/{whereFromValue}/{entryPointPageDirectives}";
+            string whereFromValue = "appointmentQuestions";
+            string currentPageDirective = "visit-reason";
+            string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
             _navigationManager.NavigateTo(targetUrl);
         }
 

@@ -1,0 +1,24 @@
+﻿@page "/date-of-birth"
+@inherits BaseComponent;
+
+<PageTitle>Telehealth</PageTitle>
+<button>back</button>
+<h4 class="header">Patient date of birth</h4>
+<label for="dob">Enter date of birth</label>
+<input id="dob" type="date" @bind="_patientInformationSeries.dateOfBirth" />
+<button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
+<br>
+<br>
+<p>​I am a page component accessible through the NavigationManager and routing mechanisms.  </p>
+@code {
+    
+    private void HandleValidSubmit()
+    {
+        string whereFromValue = "appointmentQuestions";
+        string currentPageDirective = "date-of-birth";
+        string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
+        _navigationManager.NavigateTo(targetUrl);
+    }
+
+    
+}
