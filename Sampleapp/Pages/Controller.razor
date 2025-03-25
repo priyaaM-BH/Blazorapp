@@ -61,7 +61,7 @@
         {
             //patient-address is only for guest
             entryPointPageDirectives = ["patient-info", "patient-address"],
-            seriesName = "patient-information2",
+            seriesName = "patientinformation2",
         };
         navDataList.Add(navigationData);
 
@@ -311,12 +311,15 @@
                 {
                     string jsonData = System.Text.Json.JsonSerializer.Serialize(_patientInformationSeries2);
                     _patientInformationSeries2 = System.Text.Json.JsonSerializer.Deserialize<PatientInformationSeries2>(jsonData)!;
+                    Console.WriteLine(_patientInformationSeries2.Name);
                     return;
                 }
             case "insurance":
                 {
+                    Console.WriteLine(_wipInsuranceSeries.InsuranceDetailsForm.GroupNumber);
                     string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipInsuranceSeries);
                      _insuranceSeries = System.Text.Json.JsonSerializer.Deserialize<InsuranceSeries>(jsonData)!;
+                    Console.WriteLine(_insuranceSeries.InsuranceDetailsForm.GroupNumber);
                     return;
                 }
             case "review":

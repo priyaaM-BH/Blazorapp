@@ -2,7 +2,7 @@
 @inherits BaseComponent;
 
 <h4>Patient Information</h4>
-<button @onClick="GoToPrevious">back</button>
+<button @onclick="GoToPrevious">back</button>
 <label for="name">Enter name</label>
 <input id="name" type="text" @bind="_wipPatientInformationSeries2.Name" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit">Next</button>
@@ -10,13 +10,13 @@
 {
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("visit reason - {0}", _appointmentSeries?.VisitReasonForm?.PatientRelationship);
+        //Console.WriteLine("visit reason - {0}", _appointmentSeries?.VisitReasonForm?.PatientRelationship);
         //Console.WriteLine(_appointmentSeries.ProviderID);
         //Console.WriteLine(_wipAppointmentSeries.ProviderID);
     }
     private void GoToPrevious()
     {
-        string whereFromValue = "patient-information2";
+        string whereFromValue = "patientinformation2";
         string targetUrl = $"/controller/back/{whereFromValue}";
         _navigationManager.NavigateTo(targetUrl);
     }

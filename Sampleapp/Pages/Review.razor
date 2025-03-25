@@ -9,6 +9,11 @@
 </div>
 
 <div class="review-container">
+    <h5>Date of birth</h5>
+    <p>Booking for : @_patientInformationSeries.dateOfBirth</p>
+</div>
+
+<div class="review-container">
     <h5>visit reason data</h5>
     <p>Visit reason Name : @_appointmentSeries.VisitReasonForm.VisitReasonName</p>
     <p>PatientRelationship : @_appointmentSeries.VisitReasonForm.PatientRelationship</p>
@@ -21,15 +26,22 @@
 <div class="review-container">
     <h5>appt details</h5>
     <p>Selected Time : @_appointmentSeries.SelectedTime</p>
+    <button @onclick="GoToPage">Edit</button>
+</div>
+
+<div class="review-container">
+    <h5>work related</h5>
+    <p>Selected Time : @_appointmentSeries.WorkRelated</p>
+    <button @onclick="GoToPage">Edit</button>
 </div>
 
 <div class="review-container">
     @if (_insuranceSeries.InsuranceChoice == "Yes")
         {
             <h5>Insurance</h5>
-            <p>@_insuranceSeries.InsuranceDetailsForm.MemberId</p>
-            <p>@_insuranceSeries.InsuranceDetailsForm.GroupNumber</p>
-            <p>@_insuranceSeries.InsuranceDetailsForm.PoBoxZipCode</p>
+            <p>@_insuranceSeries?.InsuranceDetailsForm?.GroupNumber</p>
+            <p>@_insuranceSeries?.InsuranceDetailsForm?.MemberId</p>
+            <p>@_insuranceSeries?.InsuranceDetailsForm?.PoBoxZipCode</p>
             <button @onclick="GoToInsurancePage">Edit</button>
         }
     @if (_insuranceSeries.InsuranceChoice == "No")
@@ -53,7 +65,7 @@
 {
     protected override async Task OnInitializedAsync()
     {
-        //Console.WriteLine("visit reason - {0}", _appointmentSeries?.VisitReasonForm?.PatientRelationship);
+        //Console.WriteLine("insurance - {0}", _insuranceSeries.InsuranceChoice);
         //Console.WriteLine(_appointmentSeries.ProviderID);
         //Console.WriteLine(_wipAppointmentSeries.ProviderID);
     }
