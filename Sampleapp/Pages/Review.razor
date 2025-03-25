@@ -8,10 +8,13 @@
     <p>Booking for : @_patientInformationSeries2.Name</p>
 </div>
 
-<div class="review-container">
-    <h5>Date of birth</h5>
-    <p>Booking for : @_patientInformationSeries.dateOfBirth</p>
-</div>
+@if(_patientInformationSeries.BookingFor == BookingFor.Guest)
+{
+    <div class="review-container">
+        <h5>Date of birth</h5>
+        <p>Booking for : @_patientInformationSeries.dateOfBirth</p>
+    </div>
+}
 
 <div class="review-container">
     <h5>visit reason data</h5>
@@ -39,9 +42,9 @@
     @if (_insuranceSeries.InsuranceChoice == "Yes")
         {
             <h5>Insurance</h5>
-            <p>@_insuranceSeries?.InsuranceDetailsForm?.GroupNumber</p>
-            <p>@_insuranceSeries?.InsuranceDetailsForm?.MemberId</p>
-            <p>@_insuranceSeries?.InsuranceDetailsForm?.PoBoxZipCode</p>
+            <p>GroupNumber: @_insuranceSeries?.InsuranceDetailsForm?.GroupNumber</p>
+            <p>MemberId: @_insuranceSeries?.InsuranceDetailsForm?.MemberId</p>
+            <p>PoBoxZipCode: @_insuranceSeries?.InsuranceDetailsForm?.PoBoxZipCode</p>
             <button @onclick="GoToInsurancePage">Edit</button>
         }
     @if (_insuranceSeries.InsuranceChoice == "No")
@@ -65,23 +68,22 @@
 {
     protected override async Task OnInitializedAsync()
     {
-        //Console.WriteLine("insurance - {0}", _insuranceSeries.InsuranceChoice);
-        //Console.WriteLine(_appointmentSeries.ProviderID);
-        //Console.WriteLine(_wipAppointmentSeries.ProviderID);
+
     }
     private void GoToPage()
     {
         _appointmentSeries.IsEditing = true;
+        _inEdit = true;
         _navigationManager.NavigateTo("/controller/edit/visitreason");
     }
 
     private void GoToInsurancePage()
     {
-        _navigationManager.NavigateTo("/insurance-details");
+        _navigationManager.NavigateTo("/controller/edit/insurance");
     }
 
     private void GoToGFEPage()
     {
-        _navigationManager.NavigateTo("/gfe");
+        //_navigationManager.NavigateTo("/gfe");
     }
 }
