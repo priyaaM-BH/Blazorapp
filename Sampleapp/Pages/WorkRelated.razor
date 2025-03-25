@@ -2,7 +2,7 @@
 @inherits BaseComponent;
 
 <PageTitle>Telehealth</PageTitle>
-<button>back</button>
+<button @onclick="GoToPrevious">back</button>
 <h4 class="header">work-related-claim</h4>
 <label for="workRelated">Enter information</label>
 <input id="workRelated" type="text" @bind="_wipAppointmentSeries.WorkRelated" />
