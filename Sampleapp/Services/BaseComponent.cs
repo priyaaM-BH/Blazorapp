@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Components;
+using SampleApp.Models;
 using SampleApp.Models.s;
 
 
@@ -9,17 +10,17 @@ public class BaseComponent : ComponentBase
 {
     #region Permanent Series Data
     public static Models.s.AppointmentSeries _appointmentSeries { get; set; } = new AppointmentSeries();
-    public static Models.s.InsuranceSeries  _insuranceSeries { get; set; } = new InsuranceSeries();
+    public static Models.s.InsuranceSeries _insuranceSeries { get; set; } = new InsuranceSeries();
     public static Models.s.PatientInformationSeries _patientInformationSeries { get; set; } = new PatientInformationSeries();
-    public static Models.PatientInformationSeries2 _patientInformationSeries2 { get; set; } = new Models.PatientInformationSeries2();
+    public static Models.PatientInformationSeries2 _patientInformationSeries2 { get; set; } = new PatientInformationSeries2();
     public static Models.Provider _ProviderInformation{ get; set; } = new Models.Provider();
     #endregion
 
     #region Temporary Series Data
     public static Models.s.AppointmentSeries _wipAppointmentSeries { get; set; } = new AppointmentSeries();
-    public static Models.s.InsuranceSeries _wipInsuranceSeries { get; set; } = new InsuranceSeries();
-    public static Models.PatientInformationSeries2 _wipPatientInformationSeries2 { get; set; } = new Models.PatientInformationSeries2();
-    public static Models.s.PatientInformationSeries _wipPatientInformationSeries { get; set; } = new PatientInformationSeries();
+    public static InsuranceSeries _wipInsuranceSeries { get; set; } = new InsuranceSeries();
+    public static PatientInformationSeries2 _wipPatientInformationSeries2 { get; set; } = new PatientInformationSeries2();
+    public static PatientInformationSeries _wipPatientInformationSeries { get; set; } = new PatientInformationSeries();
     public static bool _inEdit = false;
     public static bool _isTeleHealth { get; set; }
     #endregion

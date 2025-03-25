@@ -8,6 +8,14 @@
     <p>Booking for : @_patientInformationSeries2.Name</p>
 </div>
 
+@if(_patientInformationSeries.BookingFor == BookingFor.Guest)
+{
+    <div class="review-container">
+        <h5>Date of birth</h5>
+        <p>Booking for : @_patientInformationSeries.dateOfBirth</p>
+    </div>
+}
+
 <div class="review-container">
     <h5>visit reason data</h5>
     <p>Visit reason Name : @_appointmentSeries.VisitReasonForm.VisitReasonName</p>
@@ -21,15 +29,22 @@
 <div class="review-container">
     <h5>appt details</h5>
     <p>Selected Time : @_appointmentSeries.SelectedTime</p>
+    <button @onclick="GoToPage">Edit</button>
+</div>
+
+<div class="review-container">
+    <h5>work related</h5>
+    <p>Selected Time : @_appointmentSeries.WorkRelated</p>
+    <button @onclick="GoToPage">Edit</button>
 </div>
 
 <div class="review-container">
     @if (_insuranceSeries.InsuranceChoice == "Yes")
         {
             <h5>Insurance</h5>
-            <p>@_insuranceSeries.InsuranceDetailsForm.MemberId</p>
-            <p>@_insuranceSeries.InsuranceDetailsForm.GroupNumber</p>
-            <p>@_insuranceSeries.InsuranceDetailsForm.PoBoxZipCode</p>
+            <p>GroupNumber: @_insuranceSeries?.InsuranceDetailsForm?.GroupNumber</p>
+            <p>MemberId: @_insuranceSeries?.InsuranceDetailsForm?.MemberId</p>
+            <p>PoBoxZipCode: @_insuranceSeries?.InsuranceDetailsForm?.PoBoxZipCode</p>
             <button @onclick="GoToInsurancePage">Edit</button>
         }
     @if (_insuranceSeries.InsuranceChoice == "No")
@@ -53,23 +68,22 @@
 {
     protected override async Task OnInitializedAsync()
     {
-        //Console.WriteLine("visit reason - {0}", _appointmentSeries?.VisitReasonForm?.PatientRelationship);
-        //Console.WriteLine(_appointmentSeries.ProviderID);
-        //Console.WriteLine(_wipAppointmentSeries.ProviderID);
+
     }
     private void GoToPage()
     {
         _appointmentSeries.IsEditing = true;
-        _navigationManager.NavigateTo("/visit-reason");
+        _inEdit = true;
+        _navigationManager.NavigateTo("/controller/edit/visitreason");
     }
 
     private void GoToInsurancePage()
     {
-        _navigationManager.NavigateTo("/insurance-details");
+        _navigationManager.NavigateTo("/controller/edit/insurance");
     }
 
     private void GoToGFEPage()
     {
-        _navigationManager.NavigateTo("/gfe");
+        //_navigationManager.NavigateTo("/gfe");
     }
 }

@@ -12,16 +12,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("visit reason - {0}", _appointmentSeries?.VisitReasonForm?.PatientRelationship);
+        //Console.WriteLine("visit reason - {0}", _appointmentSeries?.VisitReasonForm?.PatientRelationship);
         //Console.WriteLine(_appointmentSeries.ProviderID);
         //Console.WriteLine(_wipAppointmentSeries.ProviderID);
     }
     private void HandleValidSubmit()
     {
-        //string whereFromValue = "insurance";
-        //string targetUrl = $"/controller/next/{whereFromValue}";
-        //_navigationManager.NavigateTo(targetUrl);
-        _navigationManager.NavigateTo("/review");
+        string whereFromValue = "insurance";
+        string targetUrl = $"/controller/next/{whereFromValue}";
+        _navigationManager.NavigateTo(targetUrl);
     }
     private void GoToPrevious()
     {

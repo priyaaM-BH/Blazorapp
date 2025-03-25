@@ -29,7 +29,7 @@
         }
         if (element != null)
         {
-            seriesName = seriesName!.ToLower();
+            element = element!.ToLower();
         }
         _navigationDataList = GetNavigationDataList();
         //if (_navigationDataList.Any(n => n.seriesName == seriesName) == false)
@@ -61,7 +61,7 @@
         {
             //patient-address is only for guest
             entryPointPageDirectives = ["patient-info", "patient-address"],
-            seriesName = "patient-information2",
+            seriesName = "patientinformation2",
         };
         navDataList.Add(navigationData);
 
@@ -134,7 +134,7 @@
                     if (index == _navigationDataList.Count - 2)
                     {
                         //Next up is the Review page.  Copy all wip data to permanent and then navigate to review.
-                        for(int s = 0; s < _navigationDataList.Count - 2; s++)
+                        for(int s = 0; s < _navigationDataList.Count - 1; s++)
                         {
                             CopyWipToPermanent(_navigationDataList[s].seriesName);
                         }
@@ -309,14 +309,14 @@
                 }
             case "patientinformation2":
                 {
-                    string jsonData = System.Text.Json.JsonSerializer.Serialize(_patientInformationSeries2);
+                    string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipPatientInformationSeries2);
                     _patientInformationSeries2 = System.Text.Json.JsonSerializer.Deserialize<PatientInformationSeries2>(jsonData)!;
                     return;
                 }
             case "insurance":
                 {
                     string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipInsuranceSeries);
-                     _insuranceSeries = System.Text.Json.JsonSerializer.Deserialize<InsuranceSeries>(jsonData)!;
+                    _insuranceSeries = System.Text.Json.JsonSerializer.Deserialize<InsuranceSeries>(jsonData)!;
                     return;
                 }
             case "review":

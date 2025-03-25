@@ -1,16 +1,16 @@
 @page "/patient-address"
 @inherits BaseComponent;
 
-<h4>Patient Information</h4>
-<button @onClick="GoToPrevious">back</button>
-<label for="address">Enter name</label>
+<h4>Patient Address</h4>
+<button @onclick="GoToPrevious">back</button>
+<label for="address">Enter address</label>
 <input id="address" type="text" @bind="_wipPatientInformationSeries2.Address" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 @code 
 {
     private void HandleValidSubmit()
     {
-        string whereFromValue = "patient-information2";
+        string whereFromValue = "patientinformation2";
         string targetUrl = $"/controller/next/{whereFromValue}";
         _navigationManager.NavigateTo(targetUrl);
     }

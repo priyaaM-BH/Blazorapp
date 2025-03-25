@@ -28,10 +28,7 @@
 @code {   
         private void HandleValidSubmit() 
         {
-            string whereFromValue = "insurance";
-            string currentPageDirective = "insurance-details";
-            string targetUrl = $"/scheduling/{whereFromValue}/{currentPageDirective}";
-            _navigationManager.NavigateTo(targetUrl);
+            _navigationManager.NavigateTo("insurance-information");
         }
 
         private void GoToPrevious()
