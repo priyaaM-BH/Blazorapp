@@ -28,7 +28,25 @@ else
     private void HandleValidSubmit(string time)
     {
         _wipAppointmentSeries.SelectedTime = time;
-       _navigationManager.NavigateTo("/tele-health");
+        if(_inEdit)
+        {
+            Console.WriteLine("istelehealth",_wipAppointmentSeries.IsTelehealth);
+            if(!_wipAppointmentSeries.IsTelehealth)
+            {
+                Console.WriteLine("test");
+                string whereFromValue = "appointment";
+                string targetUrl = $"/controller/next/{whereFromValue}";
+                _navigationManager.NavigateTo(targetUrl);
+            }
+            else
+            {
+                _navigationManager.NavigateTo("/tele-health");
+            }
+        }
+        else
+        {
+            _navigationManager.NavigateTo("/tele-health");
+        }
     }
 
     private void GoToPrevious()

@@ -189,6 +189,7 @@
                     }
                     //Navigate to the relevant page in the series
                     string pageDirective = GetPageDirectiveForElement(element!);
+                    Console.WriteLine("pageDirective - {0}", pageDirective);
                     _navigationManager.NavigateTo(pageDirective);  //TODO These relative URLs may not work...
                     return;
                 }
@@ -230,6 +231,7 @@
     private string GetPageDirectiveForElement(string element)
     {
         NavigationData navigationData = new();
+        Console.WriteLine("element - {0}",element);
         switch (element)
         {
             case "visitreason":
@@ -241,6 +243,11 @@
                 {
                     navigationData = _navigationDataList.First(n => n.seriesName == "appointment");
                     return navigationData.entryPointPageDirectives[1];
+                }
+            case "work-related":
+                {
+                    navigationData = _navigationDataList.First(n => n.seriesName == "appointment");
+                    return navigationData.entryPointPageDirectives[2];
                 }
             case "insurance":
                 {

@@ -35,7 +35,7 @@
 <div class="review-container">
     <h5>work related</h5>
     <p>Selected Time : @_appointmentSeries.WorkRelated</p>
-    <button @onclick="GoToPage">Edit</button>
+    <button @onclick="GoToPageWorkRelated">Edit</button>
 </div>
 
 <div class="review-container">
@@ -69,6 +69,11 @@
     protected override async Task OnInitializedAsync()
     {
 
+    }
+
+    private void GoToPageWorkRelated()
+    {
+        _navigationManager.NavigateTo("/controller/edit/work-related");
     }
     private void GoToPage()
     {
