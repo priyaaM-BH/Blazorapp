@@ -12,6 +12,7 @@ namespace SampleApp.Models.s
         public string? SelectedTime { get; set; }
         public string? TelehealthCommunictaionEmail { get; set; }
         public bool IsEditing { get; set; }
+        public bool IsTelehealth { get; set; }
         public string? WorkRelated { get; set; }
     }
 }

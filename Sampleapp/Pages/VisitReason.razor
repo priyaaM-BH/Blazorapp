@@ -47,7 +47,23 @@ else
         private bool ContainsEdit => _navigationManager.Uri.Contains("edit", StringComparison.OrdinalIgnoreCase);
         private void HandleValidSubmit() 
         {
-            _navigationManager.NavigateTo("/work-related");
+            if(_wipAppointmentSeries.VisitReasonForm.VisitMethod.ToLower() == "video")
+            {
+                _wipAppointmentSeries.IsTelehealth = true;
+            }
+            else
+            {
+                _wipAppointmentSeries.IsTelehealth = false;
+            }
+            if(_inEdit)
+            {
+                _navigationManager.NavigateTo("/select-time");
+            }
+            else
+            {
+                _navigationManager.NavigateTo("/work-related");
+            }
+
         }
 
         private void GoToPrevious()
