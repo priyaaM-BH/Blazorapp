@@ -4,7 +4,7 @@
 <PageTitle>Time selection</PageTitle>
 <button @onclick="GoToPrevious">back</button>
 <h4 class="header">Time selection</h4>
-@if(_appointmentSeries.IsEditing)
+@if(_AppointmentModule.IsEditing)
 {
     <h4 class="header">Edit Appointment</h4>
 }
@@ -27,36 +27,33 @@ else
     private string[] timeSlots = { "8.00", "9.00", "10.00", "11.00", "12.00", "1.00" };
     protected override void OnInitialized()
         {
-            if(!BaseComponent.AppointmentPageDirectives.Contains("select-time"))
-            {
-                BaseComponent.AppointmentPageDirectives.Add("select-time");
-            }
+            BaseComponent.AddPageDirective(ModuleNames.appointment.ToString(), "select-time");
         }
     private void HandleValidSubmit(string time)
     {
-        _wipAppointmentSeries.SelectedTime = time;
-        //if(_inEdit)
+        _wipAppointmentModule.SelectedTime = time;
+        //if(InEdit)
         //{
-            if(!_wipAppointmentSeries.IsTelehealth)
+            if(!BaseComponent.IsTeleHealth)
             {
                 string whereFromValue = "appointment";
                 string targetUrl = $"/controller/next/{whereFromValue}";
-                _navigationManager.NavigateTo(targetUrl);
+                NavigationManager.NavigateTo(targetUrl);
             }
             else
             {
-                _navigationManager.NavigateTo("/tele-health");
+                NavigationManager.NavigateTo("/tele-health");
             }
         //}
         //else
         //{
-        //    _navigationManager.NavigateTo("/tele-health");
+        //    NavigationManager.NavigateTo("/tele-health");
         //}
     }
 
     private void GoToPrevious()
         {
-            BaseComponent.AppointmentPageDirectives.Remove("select-time");
-            _navigationManager.NavigateTo("/work-related");
+            BaseComponent.RemovePageDirective(ModuleNames.appointment.ToString(), "select-time");
+            NavigationManager.NavigateTo("/work-related");
         }
 }

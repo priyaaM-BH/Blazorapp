@@ -7,9 +7,9 @@
 
 <div class="insurance-container">
     <h5>Insurance</h5>
-    <p>@_wipInsuranceSeries.InsuranceDetailsForm.MemberId</p>
-    <p>@_wipInsuranceSeries.InsuranceDetailsForm.GroupNumber</p>
-    <p>@_wipInsuranceSeries.InsuranceDetailsForm.PoBoxZipCode</p>
+    <p>@_wipInsuranceModule.InsuranceDetailsForm.MemberId</p>
+    <p>@_wipInsuranceModule.InsuranceDetailsForm.GroupNumber</p>
+    <p>@_wipInsuranceModule.InsuranceDetailsForm.PoBoxZipCode</p>
 
 <button class="btn btn-primary" @onclick="HandleValidSubmit">Next</button>
 </div>
@@ -19,21 +19,18 @@
 {
     protected override void OnInitialized()
         {
-            if(!BaseComponent.InsurancePageDirectives.Contains("insurance-information"))
-            {
-                BaseComponent.InsurancePageDirectives.Add("insurance-information");
-            }
+            BaseComponent.AddPageDirective(ModuleNames.insurance.ToString(), "insurance-information");
         }
     private void HandleValidSubmit() 
     {
         string whereFromValue = "insurance";
         string targetUrl = $"/controller/next/{whereFromValue}";
-        _navigationManager.NavigateTo(targetUrl);
+        NavigationManager.NavigateTo(targetUrl);
     }
 
     private void GoToPrevious()
     {
-        BaseComponent.InsurancePageDirectives.Remove("insurance-information");
-        _navigationManager.NavigateTo("/insurance-details");
+        BaseComponent.RemovePageDirective(ModuleNames.insurance.ToString(), "insurance-information");
+        NavigationManager.NavigateTo("/insurance-details");
     }
 }

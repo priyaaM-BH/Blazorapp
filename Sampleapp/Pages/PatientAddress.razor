@@ -4,28 +4,25 @@
 <h4>Patient Address</h4>
 <button @onclick="GoToPrevious">back</button>
 <label for="address">Enter address</label>
-<input id="address" type="text" @bind="_wipPatientInformationSeries2.Address" />
+<input id="address" type="text" @bind="_wipPatientInformationmodule.Address" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 @code 
 {
     protected override void OnInitialized()
         {
-            if(!BaseComponent.PatientInformationPageDirectives.Contains("patient-address"))
-            {
-                BaseComponent.PatientInformationPageDirectives.Add("patient-address");
-            }
+            BaseComponent.AddPageDirective(ModuleNames.patientinformation.ToString(), "patient-address");
         }
     private void HandleValidSubmit()
     {
         string whereFromValue = "patientinformation";
         string targetUrl = $"/controller/next/{whereFromValue}";
-        _navigationManager.NavigateTo(targetUrl);
+        NavigationManager.NavigateTo(targetUrl);
     }
 
     private void GoToPrevious()
     {
-        BaseComponent.PatientInformationPageDirectives.Remove("patient-address");
-        _navigationManager.NavigateTo("patient-info");
+        BaseComponent.RemovePageDirective(ModuleNames.patientinformation.ToString(), "patient-address");
+        NavigationManager.NavigateTo("patient-info");
     }
 
 }

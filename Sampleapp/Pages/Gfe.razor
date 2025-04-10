@@ -5,28 +5,25 @@
 <button @onclick="GoToPrevious">back</button>
 <h4 class="header">GFE</h4>
 <label for="email">Enter email</label>
-<input id="email" type="email" @bind="_wipInsuranceSeries.GFEEmail" />
+<input id="email" type="email" @bind="_wipInsuranceModule.GFEEmail" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 
 @code {
 
     protected override async Task OnInitializedAsync()
     {
-       if(BaseComponent.InsurancePageDirectives.Contains("good-faith-estimate"))
-       {
-            BaseComponent.InsurancePageDirectives.Add("good-faith-estimate");
-       }
+       BaseComponent.AddPageDirective(ModuleNames.insurance.ToString(), "good-faith-estimate");
     }
     private void HandleValidSubmit()
     {
         string whereFromValue = "insurance";
         string targetUrl = $"/controller/next/{whereFromValue}";
-        _navigationManager.NavigateTo(targetUrl);
+        NavigationManager.NavigateTo(targetUrl);
     }
     private void GoToPrevious()
     {
-        BaseComponent.InsurancePageDirectives.Remove("good-faith-estimate");
-        _navigationManager.NavigateTo("/insurance");
+        BaseComponent.RemovePageDirective(ModuleNames.insurance.ToString(), "good-faith-estimate");
+        NavigationManager.NavigateTo("/insurance");
     }
 
     

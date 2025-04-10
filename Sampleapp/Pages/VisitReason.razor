@@ -6,7 +6,7 @@
 <PageTitle>Visit reason</PageTitle>
 
 <button @onclick="GoToPrevious">back</button>
-@if(_appointmentSeries.IsEditing)
+@if(_AppointmentModule.IsEditing)
 {
     <h4 class="header">Edit Visit reason</h4>
 }
@@ -15,26 +15,26 @@ else
     <h4 class="header">Visit reason</h4>
 }
 
-<EditForm Model="@_wipAppointmentSeries.VisitReasonForm" OnValidSubmit="HandleValidSubmit">
+<EditForm Model="@_wipAppointmentModule.VisitReasonForm" OnValidSubmit="HandleValidSubmit">
     <div class="form-group">
         <label for="visitReasonName">Visit Reason Name</label>
-        <InputText id="visitReasonName" class="form-control" @bind-Value="_wipAppointmentSeries.VisitReasonForm.VisitReasonName" />
+        <InputText id="visitReasonName" class="form-control" @bind-Value="_wipAppointmentModule.VisitReasonForm.VisitReasonName" />
     </div>
 
     <div class="form-group">
         <label for="patientRelationship">Patient Relationship</label>
-        <InputText id="patientRelationship" class="form-control" @bind-Value="_wipAppointmentSeries.VisitReasonForm.PatientRelationship" />
+        <InputText id="patientRelationship" class="form-control" @bind-Value="_wipAppointmentModule.VisitReasonForm.PatientRelationship" />
     </div>
 
     <div class="form-group">
         <label for="visitMethod">Visit Method</label>
-        <InputText id="visitMethod" class="form-control" @bind-Value="_wipAppointmentSeries.VisitReasonForm.VisitMethod" />
-        @* <input type="checkbox" @bind="_wipAppointmentSeries.VisitReasonForm.VisitMethod" /> *@
+        <InputText id="visitMethod" class="form-control" @bind-Value="_wipAppointmentModule.VisitReasonForm.VisitMethod" />
+        @* <input type="checkbox" @bind="_wipAppointmentModule.VisitReasonForm.VisitMethod" /> *@
     </div>
 
     <div class="form-group">
         <label for="reasonComment">Reason Comment</label>
-        <InputTextArea id="reasonComment" class="form-control" @bind-Value="_wipAppointmentSeries.VisitReasonForm.ReasonComment" />
+        <InputTextArea id="reasonComment" class="form-control" @bind-Value="_wipAppointmentModule.VisitReasonForm.ReasonComment" />
     </div>
 
     <button class="btn btn-primary" type="submit" >Next</button>
@@ -44,42 +44,38 @@ else
 <p>​I am a page component accessible through the NavigationManager and routing mechanisms.  </p>
 @code {  
         private string? whereFrom { get; set; } 
-        private bool ContainsEdit => _navigationManager.Uri.Contains("edit", StringComparison.OrdinalIgnoreCase);
+        private bool ContainsEdit => NavigationManager.Uri.Contains("edit", StringComparison.OrdinalIgnoreCase);
 
         protected override void OnInitialized()
         {
-            if(!BaseComponent.AppointmentPageDirectives.Contains("visit-reason"))
-            {
-                BaseComponent.AppointmentPageDirectives.Add("visit-reason");
-            }
-            
+            BaseComponent.AddPageDirective(ModuleNames.appointment.ToString(), "visit-reason");
         }
         private void HandleValidSubmit() 
         {
-            if(_wipAppointmentSeries.VisitReasonForm.VisitMethod.ToLower() == "video")
+            if(_wipAppointmentModule.VisitReasonForm.VisitMethod.ToLower() == "video")
             {
-                _wipAppointmentSeries.IsTelehealth = true;
+                BaseComponent.IsTeleHealth = true;
             }
             else
             {
-                _wipAppointmentSeries.IsTelehealth = false;
+                BaseComponent.IsTeleHealth = false;
             }
-            if(_inEdit)
+            if(InEdit)
             {
-                _navigationManager.NavigateTo("/select-time");
+                NavigationManager.NavigateTo("/select-time");
             }
             else
             {
-                _navigationManager.NavigateTo("/work-related");
+                NavigationManager.NavigateTo("/work-related");
             }
 
         }
 
         private void GoToPrevious()
         {
-            BaseComponent.AppointmentPageDirectives.Remove("visit-reason");
+            BaseComponent.RemovePageDirective(ModuleNames.appointment.ToString(), "visit-reason");
             string whereFromValue = "appointment";
             string targetUrl = $"/controller/back/{whereFromValue}";
-            _navigationManager.NavigateTo(targetUrl);
+            NavigationManager.NavigateTo(targetUrl);
         }
     }

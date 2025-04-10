@@ -1,5 +1,6 @@
 @page "/patient-selection"
 @inherits BaseComponent
+@using System.Text.Json;
 
 <div class="patient-selection-container">
     @foreach (BookingFor bookingOption in Enum.GetValues(typeof(BookingFor)))
@@ -16,14 +17,11 @@
 
     protected override void OnInitialized()
     {
-        if(!BaseComponent.PatientSelectionPageDirectives.Contains("patient-selection"))
-        {
-            BaseComponent.PatientSelectionPageDirectives.Add("patient-selection");
-        }
+        BaseComponent.AddPageDirective(ModuleNames.patientselection.ToString(), "patient-selection");
     }
     private void HandleValidSubmit(BookingFor bookingFor)
     {
-        _wipPatientInformationSeries.BookingFor = bookingFor;
+        _wipPatientSelectionmodule.BookingFor = bookingFor;
         string whereFromValue = "patientselection";
         string targetUrl;
         if( bookingFor == BookingFor.Guest)
@@ -34,7 +32,6 @@
         {
             targetUrl = $"/controller/next/{whereFromValue}";
         }
-        _navigationManager.NavigateTo(targetUrl);
-        
+        NavigationManager.NavigateTo(targetUrl);
     }
 }

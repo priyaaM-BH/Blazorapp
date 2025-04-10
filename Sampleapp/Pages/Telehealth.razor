@@ -5,7 +5,7 @@
 <button @onclick="GoToPrevious">back</button>
 <h4 class="header">Telehealth</h4>
 <label for="email">Enter email</label>
-<input id="email" type="email" @bind="_wipAppointmentSeries.TelehealthCommunictaionEmail" />
+<input id="email" type="email" @bind="_wipAppointmentModule.TelehealthCommunictaionEmail" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 <br>
 <br>
@@ -14,22 +14,19 @@
 
     protected override void OnInitialized()
         {
-            if(!BaseComponent.AppointmentPageDirectives.Contains("tele-health"))
-            {
-                BaseComponent.AppointmentPageDirectives.Add("tele-health");
-            }
+            BaseComponent.AddPageDirective(ModuleNames.appointment.ToString(), "tele-health");
         }
     private void HandleValidSubmit()
     {
         string whereFromValue = "appointment";
         string targetUrl = $"/controller/next/{whereFromValue}";
-        _navigationManager.NavigateTo(targetUrl);
+        NavigationManager.NavigateTo(targetUrl);
     }
 
     private void GoToPrevious()
     {
-        BaseComponent.AppointmentPageDirectives.Remove("tele-health");
-        _navigationManager.NavigateTo("/select-time");
+        BaseComponent.RemovePageDirective(ModuleNames.appointment.ToString(), "tele-health");
+        NavigationManager.NavigateTo("/select-time");
     }
 
     
