@@ -10,14 +10,11 @@
 {
     protected override async Task OnInitializedAsync()
     {   
-        if(!BaseComponent.PatientInformationPageDirectives.Contains("patient-info"))
-        {
-            BaseComponent.PatientInformationPageDirectives.Add("patient-info");  
-        }
+        BaseComponent.AddPageDirective(ModuleNames.patientinformation.ToString(), "patient-info");
     }
     private void GoToPrevious()
     {
-        BaseComponent.PatientInformationPageDirectives.Remove("patient-info");  
+        BaseComponent.RemovePageDirective(ModuleNames.patientinformation.ToString(), "patient-info"); 
         string whereFromValue = "patientinformation";
         string targetUrl = $"/controller/back/{whereFromValue}";
         NavigationManager.NavigateTo(targetUrl);

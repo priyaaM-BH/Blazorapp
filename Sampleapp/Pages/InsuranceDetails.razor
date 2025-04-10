@@ -28,10 +28,7 @@
 @code {   
     protected override void OnInitialized()
         {
-            if(!BaseComponent.InsurancePageDirectives.Contains("insurance-details"))
-            {
-                BaseComponent.InsurancePageDirectives.Add("insurance-details");
-            }
+            BaseComponent.AddPageDirective(ModuleNames.insurance.ToString(), "insurance-details");
         }
         private void HandleValidSubmit() 
         {
@@ -40,7 +37,7 @@
 
         private void GoToPrevious()
         {
-            BaseComponent.InsurancePageDirectives.Remove("insurance-details");
+            BaseComponent.RemovePageDirective(ModuleNames.insurance.ToString(), "insurance-details");
             NavigationManager.NavigateTo("/insurance");
         }
     }

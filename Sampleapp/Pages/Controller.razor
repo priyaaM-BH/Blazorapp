@@ -14,7 +14,7 @@
     public string? moduleName { get; set; } = string.Empty;
     [Parameter]
     public string? element { get; set; } = string.Empty;
-    private static List<ModuleEntryPoints> _ModuleEntryPointsList = new List<ModuleEntryPoints>();
+    private static List<ModuleEntryPoints> ModuleEntryPointsList = new List<ModuleEntryPoints>();
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -32,11 +32,7 @@
         {
             element = element!.ToLower();
         }
-        _ModuleEntryPointsList = GetModuleEntryPointsList();
-        //if (_ModuleEntryPointsList.Any(n => n.moduleName == moduleName) == false)
-        //{
-        //    throw new ApplicationException($"Invalid value for moduleName: {moduleName}");
-        //}
+        ModuleEntryPointsList = GetModuleEntryPointsList();
         Navigate();
     }
     private List<ModuleEntryPoints> GetModuleEntryPointsList()
@@ -105,7 +101,7 @@
                     _wipInsuranceModule = new();
 
                     //Navigate to the first series.
-                    NavigationManager.NavigateTo($"{_ModuleEntryPointsList[0].entryPointPageDirectives[0]}");
+                    NavigationManager.NavigateTo($"{ModuleEntryPointsList[0].entryPointPageDirectives[0]}");
                     //TODO Make sure all landing pages in a series has the start point parameter in the URL.
                     return;
                 }
@@ -121,31 +117,31 @@
 
                         //Navigate to the review (last series') page.  Now we are out of Edit mode again.
                         InEdit = false;
-                        NavigationManager.NavigateTo($"{_ModuleEntryPointsList[^1].entryPointPageDirectives[0]}");
+                        NavigationManager.NavigateTo($"{ModuleEntryPointsList[^1].entryPointPageDirectives[0]}");
                         return;
                     }
 
                     //Not in edit mode.  Go to the next series.
                     //First find out where we are.
-                    int index = _ModuleEntryPointsList.FindIndex(n => n.moduleName == moduleName);
+                    int index = ModuleEntryPointsList.FindIndex(n => n.moduleName == moduleName);
                     if (index == -1)
                     {
                         throw new ApplicationException($"Could not find series by name: {moduleName}");
                     }
-                    if (index == _ModuleEntryPointsList.Count - 2)
+                    if (index == ModuleEntryPointsList.Count - 2)
                     {
                         //Next up is the Review page.  Copy all wip data to permanent and then navigate to review.
-                        for(int s = 0; s < _ModuleEntryPointsList.Count - 1; s++)
+                        for(int s = 0; s < ModuleEntryPointsList.Count - 1; s++)
                         {
-                            CopyWipToPermanent(_ModuleEntryPointsList[s].moduleName);
+                            CopyWipToPermanent(ModuleEntryPointsList[s].moduleName);
                         }
                         //Once we go to the Review page, we are out of Edit mode.
                         InEdit = false;
-                        NavigationManager.NavigateTo($"{_ModuleEntryPointsList[^1].entryPointPageDirectives[0]}");
+                        NavigationManager.NavigateTo($"{ModuleEntryPointsList[^1].entryPointPageDirectives[0]}");
                         return;
                     }
                     //More series to process.  Navigate to the next one.
-                    NavigationManager.NavigateTo($"{_ModuleEntryPointsList[index + 1].entryPointPageDirectives[0]}");
+                    NavigationManager.NavigateTo($"{ModuleEntryPointsList[index + 1].entryPointPageDirectives[0]}");
                     return;
                 }
             case "back":
@@ -156,11 +152,11 @@
                     if (InEdit)
                     {
                         //Sophia was in Edit mode in the series.  Just navigate back to the review page
-                        NavigationManager.NavigateTo($"{_ModuleEntryPointsList[^1].entryPointPageDirectives[0]}");
+                        NavigationManager.NavigateTo($"{ModuleEntryPointsList[^1].entryPointPageDirectives[0]}");
                         return;
                     }
                     //Not in Edit mode.  Go back to the previous series.
-                    int index = _ModuleEntryPointsList.FindIndex(n => n.moduleName == moduleName);
+                    int index = ModuleEntryPointsList.FindIndex(n => n.moduleName == moduleName);
 
                     if (index == -1)
                     {
@@ -171,6 +167,7 @@
                         throw new ApplicationException($"Encountered a go-back command while in the first series");
                     }
                     string targetUrl = SetLastDirectivesOfModule(moduleName);
+                    Console.WriteLine(targetUrl);
                     //Navigate to the previous's series' "last" page.
                     NavigationManager.NavigateTo($"{targetUrl}");
 
@@ -186,9 +183,9 @@
                 {
                     InEdit = true;
                     //Copy all series' permanent data over to wip.
-                    for (int s = 0; s < _ModuleEntryPointsList.Count - 1; s++)
+                    for (int s = 0; s < ModuleEntryPointsList.Count - 1; s++)
                     {
-                        CopyPermanentToWip(_ModuleEntryPointsList[s].moduleName);
+                        CopyPermanentToWip(ModuleEntryPointsList[s].moduleName);
                     }
                     //Navigate to the relevant page in the series
                     //string pageDirective = GetPageDirectiveForElement(element!);
@@ -273,29 +270,9 @@
 
     private string SetLastDirectivesOfModule(string moduleName)
     {
-        switch (moduleName)
-        {
-            case "appointment":
-                {
-                    return BaseComponent.PatientSelectionPageDirectives.Last();
-                }
-            case "patientinformation":
-                {
-                    return BaseComponent.AppointmentPageDirectives.Last();
-                }
-            case "insurance":
-                {
-                    return BaseComponent.PatientInformationPageDirectives.Last();
-                }
-            case "review":
-                {
-                    throw new ApplicationException("Review page should not have gotten here");
-                }
-            default:
-                {
-                    throw new ApplicationException($"Unknown series name: {moduleName}");
-                }
-        } 
+        Console.WriteLine(JsonSerializer.Serialize(BaseComponent.ModulePagesVisitedList));
+        int index = GetModuleOffset(moduleName);
+        return ModulePagesVisitedList[index - 1].entryPointPageDirectives[^1];
     }
     private void CopyWipToPermanent(string moduleName)
     {

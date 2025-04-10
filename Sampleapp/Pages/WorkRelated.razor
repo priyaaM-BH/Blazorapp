@@ -14,10 +14,7 @@
     
     protected override void OnInitialized()
         {
-            if(!BaseComponent.AppointmentPageDirectives.Contains("work-related"))
-            {
-                BaseComponent.AppointmentPageDirectives.Add("work-related");
-            }  
+            BaseComponent.AddPageDirective(ModuleNames.appointment.ToString(), "work-related");
         }
     private void HandleValidSubmit()
     {
@@ -36,7 +33,7 @@
 
     private void GoToPrevious()
     {
-        BaseComponent.AppointmentPageDirectives.Remove("work-related");
+        BaseComponent.RemovePageDirective(ModuleNames.appointment.ToString(), "work-related");
         if(InEdit)
         {
             string whereFromValue = "appointment";

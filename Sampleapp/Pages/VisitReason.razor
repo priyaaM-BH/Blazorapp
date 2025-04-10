@@ -48,11 +48,7 @@ else
 
         protected override void OnInitialized()
         {
-            if(!BaseComponent.AppointmentPageDirectives.Contains("visit-reason"))
-            {
-                BaseComponent.AppointmentPageDirectives.Add("visit-reason");
-            }
-            
+            BaseComponent.AddPageDirective(ModuleNames.appointment.ToString(), "visit-reason");
         }
         private void HandleValidSubmit() 
         {
@@ -77,7 +73,7 @@ else
 
         private void GoToPrevious()
         {
-            BaseComponent.AppointmentPageDirectives.Remove("visit-reason");
+            BaseComponent.RemovePageDirective(ModuleNames.appointment.ToString(), "visit-reason");
             string whereFromValue = "appointment";
             string targetUrl = $"/controller/back/{whereFromValue}";
             NavigationManager.NavigateTo(targetUrl);

@@ -1,5 +1,6 @@
 ﻿@page "/date-of-birth"
 @inherits BaseComponent;
+@using System.Text.Json;
 
 <PageTitle>Telehealth</PageTitle>
 <button @onclick="GoToPreviousPage">back</button>
@@ -13,10 +14,8 @@
 @code {
     protected override void OnInitialized()
     {
-        if(!BaseComponent.PatientSelectionPageDirectives.Contains("date-of-birth"))
-        {
-            BaseComponent.PatientSelectionPageDirectives.Add("date-of-birth");
-        }
+        BaseComponent.AddPageDirective(ModuleNames.patientselection.ToString(), "date-of-birth");
+        Console.WriteLine(JsonSerializer.Serialize(BaseComponent.ModulePagesVisitedList));
     }
     private void HandleValidSubmit()
     {
@@ -27,7 +26,8 @@
 
     private void GoToPreviousPage()
     {
-        BaseComponent.PatientSelectionPageDirectives.Remove("date-of-birth");
+        BaseComponent.RemovePageDirective(ModuleNames.patientselection.ToString(), "date-of-birth");
+        Console.WriteLine(JsonSerializer.Serialize(BaseComponent.ModulePagesVisitedList));
         NavigationManager.NavigateTo("/patient-selection");
     }
 

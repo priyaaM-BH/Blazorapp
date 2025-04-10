@@ -1,5 +1,5 @@
 @page "/insurance"
-
+@using System.Text.Json;
 @inherits BaseComponent;
 
 <PageTitle>Insurance</PageTitle>
@@ -15,15 +15,13 @@
 
     protected override void OnInitialized()
         {
-            if(BaseComponent.InsurancePageDirectives.Contains("insurance"))
-            {
-                BaseComponent.InsurancePageDirectives.Add("insurance");
-            }
+            BaseComponent.AddPageDirective(ModuleNames.insurance.ToString(), "insurance");
+            Console.WriteLine(JsonSerializer.Serialize(BaseComponent.ModulePagesVisitedList));
         }
 
         private void GoToPrevious()
         {
-            BaseComponent.InsurancePageDirectives.Remove("insurance");
+            BaseComponent.RemovePageDirective(ModuleNames.insurance.ToString(), "insurance");
             string whereFromValue = "insurance";
             string targetUrl = $"/controller/back/{whereFromValue}";
             NavigationManager.NavigateTo(targetUrl);

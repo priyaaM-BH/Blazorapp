@@ -27,10 +27,7 @@ else
     private string[] timeSlots = { "8.00", "9.00", "10.00", "11.00", "12.00", "1.00" };
     protected override void OnInitialized()
         {
-            if(!BaseComponent.AppointmentPageDirectives.Contains("select-time"))
-            {
-                BaseComponent.AppointmentPageDirectives.Add("select-time");
-            }
+            BaseComponent.AddPageDirective(ModuleNames.appointment.ToString(), "select-time");
         }
     private void HandleValidSubmit(string time)
     {
@@ -56,7 +53,7 @@ else
 
     private void GoToPrevious()
         {
-            BaseComponent.AppointmentPageDirectives.Remove("select-time");
+            BaseComponent.RemovePageDirective(ModuleNames.appointment.ToString(), "select-time");
             NavigationManager.NavigateTo("/work-related");
         }
 }

@@ -12,10 +12,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-       if(BaseComponent.InsurancePageDirectives.Contains("good-faith-estimate"))
-       {
-            BaseComponent.InsurancePageDirectives.Add("good-faith-estimate");
-       }
+       BaseComponent.AddPageDirective(ModuleNames.insurance.ToString(), "good-faith-estimate");
     }
     private void HandleValidSubmit()
     {
@@ -25,7 +22,7 @@
     }
     private void GoToPrevious()
     {
-        BaseComponent.InsurancePageDirectives.Remove("good-faith-estimate");
+        BaseComponent.RemovePageDirective(ModuleNames.insurance.ToString(), "good-faith-estimate");
         NavigationManager.NavigateTo("/insurance");
     }
 

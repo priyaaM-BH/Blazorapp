@@ -14,10 +14,7 @@
 
     protected override void OnInitialized()
         {
-            if(!BaseComponent.AppointmentPageDirectives.Contains("tele-health"))
-            {
-                BaseComponent.AppointmentPageDirectives.Add("tele-health");
-            }
+            BaseComponent.AddPageDirective(ModuleNames.appointment.ToString(), "tele-health");
         }
     private void HandleValidSubmit()
     {
@@ -28,7 +25,7 @@
 
     private void GoToPrevious()
     {
-        BaseComponent.AppointmentPageDirectives.Remove("tele-health");
+        BaseComponent.RemovePageDirective(ModuleNames.appointment.ToString(), "tele-health");
         NavigationManager.NavigateTo("/select-time");
     }
 
