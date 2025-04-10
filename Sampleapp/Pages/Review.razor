@@ -4,66 +4,66 @@
 
 <div class="review-container">
     <h5>Who this appt</h5>
-    <p>Booking for : @_patientInformationSeries.BookingFor</p>
-    <p>Booking for : @_patientInformationSeries2.Name</p>
+    <p>Booking for : @_PatientSelectionmodule.BookingFor</p>
+    <p>Booking for : @_PatientInformationmodule.Name</p>
 </div>
 
-@if(_patientInformationSeries.BookingFor == BookingFor.Guest)
+@if(_PatientSelectionmodule.BookingFor == BookingFor.Guest)
 {
     <div class="review-container">
         <h5>Date of birth</h5>
-        <p>Booking for : @_patientInformationSeries.dateOfBirth</p>
+        <p>Booking for : @_PatientSelectionmodule.dateOfBirth</p>
     </div>
 }
 
 <div class="review-container">
     <h5>visit reason data</h5>
-    <p>Visit reason Name : @_appointmentSeries.VisitReasonForm.VisitReasonName</p>
-    <p>PatientRelationship : @_appointmentSeries.VisitReasonForm.PatientRelationship</p>
-    <p>VisitMethod : @_appointmentSeries.VisitReasonForm.VisitMethod</p>
-    <p>ReasonComment : @_appointmentSeries.VisitReasonForm.ReasonComment</p>
+    <p>Visit reason Name : @_AppointmentModule.VisitReasonForm.VisitReasonName</p>
+    <p>PatientRelationship : @_AppointmentModule.VisitReasonForm.PatientRelationship</p>
+    <p>VisitMethod : @_AppointmentModule.VisitReasonForm.VisitMethod</p>
+    <p>ReasonComment : @_AppointmentModule.VisitReasonForm.ReasonComment</p>
     @* <button @onclick="() => GoToPage('visit-reason')">Edit</button> *@
     <button @onclick="GoToPage">Edit</button>
 </div>
 
 <div class="review-container">
     <h5>appt details</h5>
-    <p>Selected Time : @_appointmentSeries.SelectedTime</p>
+    <p>Selected Time : @_AppointmentModule.SelectedTime</p>
     <button @onclick="GoToPage">Edit</button>
 </div>
 
 <div class="review-container">
     <h5>work related</h5>
-    <p>Selected Time : @_appointmentSeries.WorkRelated</p>
+    <p>Selected Time : @_AppointmentModule.WorkRelated</p>
     <button @onclick="GoToPageWorkRelated">Edit</button>
 </div>
 
 <div class="review-container">
-    @if (_insuranceSeries.InsuranceChoice == "Yes")
+    @if (_InsuranceModule.InsuranceChoice == "Yes")
         {
             <h5>Insurance</h5>
-            <p>GroupNumber: @_insuranceSeries?.InsuranceDetailsForm?.GroupNumber</p>
-            <p>MemberId: @_insuranceSeries?.InsuranceDetailsForm?.MemberId</p>
-            <p>PoBoxZipCode: @_insuranceSeries?.InsuranceDetailsForm?.PoBoxZipCode</p>
+            <p>GroupNumber: @_InsuranceModule?.InsuranceDetailsForm?.GroupNumber</p>
+            <p>MemberId: @_InsuranceModule?.InsuranceDetailsForm?.MemberId</p>
+            <p>PoBoxZipCode: @_InsuranceModule?.InsuranceDetailsForm?.PoBoxZipCode</p>
             <button @onclick="GoToInsurancePage">Edit</button>
         }
-    @if (_insuranceSeries.InsuranceChoice == "No")
+    @if (_InsuranceModule.InsuranceChoice == "No")
         {
             <h5>GFE</h5>
-            <p>@_insuranceSeries.GFEEmail</p>
+            <p>@_InsuranceModule.GFEEmail</p>
             <button @onclick="GoToGFEPage">Edit</button>
         }
 </div>
 
 <div class="review-container">
     <h5>Telehealth</h5>
-    <p>Selected Time : @_appointmentSeries.TelehealthCommunictaionEmail</p>
+    <p>Selected Time : @_AppointmentModule.TelehealthCommunictaionEmail</p>
     <button>Edit</button>
 </div>
 <br>
 <br>
 <p>​I am a page component accessible through the NavigationManager and routing mechanisms.</p>
-<p>editing visit reason : @_appointmentSeries.IsEditing</p>
+<p>editing visit reason : @_AppointmentModule.IsEditing</p>
 @code
 {
     protected override async Task OnInitializedAsync()
@@ -73,22 +73,22 @@
 
     private void GoToPageWorkRelated()
     {
-        _navigationManager.NavigateTo("/controller/edit/work-related");
+        NavigationManager.NavigateTo("/controller/edit/work-related");
     }
     private void GoToPage()
     {
-        _appointmentSeries.IsEditing = true;
-        _inEdit = true;
-        _navigationManager.NavigateTo("/controller/edit/visit-reason");
+        _AppointmentModule.IsEditing = true;
+        InEdit = true;
+        NavigationManager.NavigateTo("/controller/edit/visit-reason");
     }
 
     private void GoToInsurancePage()
     {
-        _navigationManager.NavigateTo("/controller/edit/insurance");
+        NavigationManager.NavigateTo("/controller/edit/insurance");
     }
 
     private void GoToGFEPage()
     {
-        //_navigationManager.NavigateTo("/gfe");
+        //NavigationManager.NavigateTo("/gfe");
     }
 }

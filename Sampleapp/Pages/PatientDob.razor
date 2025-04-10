@@ -5,7 +5,7 @@
 <button @onclick="GoToPreviousPage">back</button>
 <h4 class="header">Patient date of birth</h4>
 <label for="dob">Enter date of birth</label>
-<input id="dob" type="date" @bind="_patientInformationSeries.dateOfBirth" />
+<input id="dob" type="date" @bind="_PatientSelectionmodule.dateOfBirth" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 <br>
 <br>
@@ -22,13 +22,13 @@
     {
         string whereFromValue = "patientselection";
         string targetUrl = $"/controller/next/{whereFromValue}";
-        _navigationManager.NavigateTo(targetUrl);
+        NavigationManager.NavigateTo(targetUrl);
     }
 
     private void GoToPreviousPage()
     {
         BaseComponent.PatientSelectionPageDirectives.Remove("date-of-birth");
-        _navigationManager.NavigateTo("/patient-selection");
+        NavigationManager.NavigateTo("/patient-selection");
     }
 
     

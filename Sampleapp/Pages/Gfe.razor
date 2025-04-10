@@ -5,7 +5,7 @@
 <button @onclick="GoToPrevious">back</button>
 <h4 class="header">GFE</h4>
 <label for="email">Enter email</label>
-<input id="email" type="email" @bind="_wipInsuranceSeries.GFEEmail" />
+<input id="email" type="email" @bind="_wipInsuranceModule.GFEEmail" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 
 @code {
@@ -21,12 +21,12 @@
     {
         string whereFromValue = "insurance";
         string targetUrl = $"/controller/next/{whereFromValue}";
-        _navigationManager.NavigateTo(targetUrl);
+        NavigationManager.NavigateTo(targetUrl);
     }
     private void GoToPrevious()
     {
         BaseComponent.InsurancePageDirectives.Remove("good-faith-estimate");
-        _navigationManager.NavigateTo("/insurance");
+        NavigationManager.NavigateTo("/insurance");
     }
 
     

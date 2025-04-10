@@ -7,9 +7,9 @@
 
 <div class="insurance-container">
     <h5>Insurance</h5>
-    <p>@_wipInsuranceSeries.InsuranceDetailsForm.MemberId</p>
-    <p>@_wipInsuranceSeries.InsuranceDetailsForm.GroupNumber</p>
-    <p>@_wipInsuranceSeries.InsuranceDetailsForm.PoBoxZipCode</p>
+    <p>@_wipInsuranceModule.InsuranceDetailsForm.MemberId</p>
+    <p>@_wipInsuranceModule.InsuranceDetailsForm.GroupNumber</p>
+    <p>@_wipInsuranceModule.InsuranceDetailsForm.PoBoxZipCode</p>
 
 <button class="btn btn-primary" @onclick="HandleValidSubmit">Next</button>
 </div>
@@ -28,12 +28,12 @@
     {
         string whereFromValue = "insurance";
         string targetUrl = $"/controller/next/{whereFromValue}";
-        _navigationManager.NavigateTo(targetUrl);
+        NavigationManager.NavigateTo(targetUrl);
     }
 
     private void GoToPrevious()
     {
         BaseComponent.InsurancePageDirectives.Remove("insurance-information");
-        _navigationManager.NavigateTo("/insurance-details");
+        NavigationManager.NavigateTo("/insurance-details");
     }
 }

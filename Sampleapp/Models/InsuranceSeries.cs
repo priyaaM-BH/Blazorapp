@@ -1,8 +1,8 @@
 namespace SampleApp.Models.s
 {
-    public class InsuranceSeries
+    public class InsuranceModule
     {
-        public InsuranceSeries()
+        public InsuranceModule()
         {
             this.InsuranceDetailsForm = new InsuranceDetailsForm();
         }

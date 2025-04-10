@@ -1,9 +1,9 @@
 
 namespace SampleApp.Models.s
 {
-    public class AppointmentSeries
+    public class AppointmentModule
     {
-        public AppointmentSeries()
+        public AppointmentModule()
         {
             this.VisitReasonForm = new VisitReasonForm();
         }

@@ -23,7 +23,7 @@
     }
     private void HandleValidSubmit(BookingFor bookingFor)
     {
-        _wipPatientInformationSeries.BookingFor = bookingFor;
+        _wipPatientSelectionmodule.BookingFor = bookingFor;
         string whereFromValue = "patientselection";
         string targetUrl;
         if( bookingFor == BookingFor.Guest)
@@ -34,7 +34,7 @@
         {
             targetUrl = $"/controller/next/{whereFromValue}";
         }
-        _navigationManager.NavigateTo(targetUrl);
+        NavigationManager.NavigateTo(targetUrl);
         
     }
 }

@@ -5,7 +5,7 @@
 <button @onclick="GoToPrevious">back</button>
 <h4 class="header">Telehealth</h4>
 <label for="email">Enter email</label>
-<input id="email" type="email" @bind="_wipAppointmentSeries.TelehealthCommunictaionEmail" />
+<input id="email" type="email" @bind="_wipAppointmentModule.TelehealthCommunictaionEmail" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 <br>
 <br>
@@ -23,13 +23,13 @@
     {
         string whereFromValue = "appointment";
         string targetUrl = $"/controller/next/{whereFromValue}";
-        _navigationManager.NavigateTo(targetUrl);
+        NavigationManager.NavigateTo(targetUrl);
     }
 
     private void GoToPrevious()
     {
         BaseComponent.AppointmentPageDirectives.Remove("tele-health");
-        _navigationManager.NavigateTo("/select-time");
+        NavigationManager.NavigateTo("/select-time");
     }
 
     

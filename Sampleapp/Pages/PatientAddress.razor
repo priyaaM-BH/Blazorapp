@@ -4,7 +4,7 @@
 <h4>Patient Address</h4>
 <button @onclick="GoToPrevious">back</button>
 <label for="address">Enter address</label>
-<input id="address" type="text" @bind="_wipPatientInformationSeries2.Address" />
+<input id="address" type="text" @bind="_wipPatientInformationmodule.Address" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 @code 
 {
@@ -19,13 +19,13 @@
     {
         string whereFromValue = "patientinformation";
         string targetUrl = $"/controller/next/{whereFromValue}";
-        _navigationManager.NavigateTo(targetUrl);
+        NavigationManager.NavigateTo(targetUrl);
     }
 
     private void GoToPrevious()
     {
         BaseComponent.PatientInformationPageDirectives.Remove("patient-address");
-        _navigationManager.NavigateTo("patient-info");
+        NavigationManager.NavigateTo("patient-info");
     }
 
 }

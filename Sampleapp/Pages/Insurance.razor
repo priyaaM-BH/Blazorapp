@@ -26,7 +26,7 @@
             BaseComponent.InsurancePageDirectives.Remove("insurance");
             string whereFromValue = "insurance";
             string targetUrl = $"/controller/back/{whereFromValue}";
-            _navigationManager.NavigateTo(targetUrl);
+            NavigationManager.NavigateTo(targetUrl);
         }
 
         private void NavigateToInsuranceDetails()
@@ -43,14 +43,14 @@
             string targetUrl;
             if( selection == "insurance-details")
             {
-                _wipInsuranceSeries.InsuranceChoice = "Yes";
+                _wipInsuranceModule.InsuranceChoice = "Yes";
                 targetUrl = $"insurance-details";
             }
             else
             {
-                _wipInsuranceSeries.InsuranceChoice = "No";
+                _wipInsuranceModule.InsuranceChoice = "No";
                 targetUrl = $"good-faith-estimate";
             }
-             _navigationManager.NavigateTo(targetUrl);
+             NavigationManager.NavigateTo(targetUrl);
         }
     }

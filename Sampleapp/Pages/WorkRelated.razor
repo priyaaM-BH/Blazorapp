@@ -5,7 +5,7 @@
 <button @onclick="GoToPrevious">back</button>
 <h4 class="header">work-related-claim</h4>
 <label for="workRelated">Enter information</label>
-<input id="workRelated" type="text" @bind="_wipAppointmentSeries.WorkRelated" />
+<input id="workRelated" type="text" @bind="_wipAppointmentModule.WorkRelated" />
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 <br>
 <br>
@@ -21,15 +21,15 @@
         }
     private void HandleValidSubmit()
     {
-        if(_inEdit)
+        if(InEdit)
         {
                 string whereFromValue = "appointment";
                 string targetUrl = $"/controller/next/{whereFromValue}";
-                _navigationManager.NavigateTo(targetUrl);
+                NavigationManager.NavigateTo(targetUrl);
             }
             else
             {
-                _navigationManager.NavigateTo("select-time");
+                NavigationManager.NavigateTo("select-time");
             }
         
     }
@@ -37,15 +37,15 @@
     private void GoToPrevious()
     {
         BaseComponent.AppointmentPageDirectives.Remove("work-related");
-        if(_inEdit)
+        if(InEdit)
         {
             string whereFromValue = "appointment";
             string targetUrl = $"/controller/back/{whereFromValue}";
-            _navigationManager.NavigateTo(targetUrl);
+            NavigationManager.NavigateTo(targetUrl);
         }
         else
         {
-            _navigationManager.NavigateTo("/visit-reason");
+            NavigationManager.NavigateTo("/visit-reason");
         }
     }
 

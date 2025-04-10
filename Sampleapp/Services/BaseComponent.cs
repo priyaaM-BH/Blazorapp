@@ -9,25 +9,25 @@ namespace SampleApp.Services
 public class BaseComponent : ComponentBase
 {
     #region Permanent Series Data
-    public static Models.s.AppointmentSeries _appointmentSeries { get; set; } = new();
-    public static Models.s.InsuranceSeries _insuranceSeries { get; set; } = new();
-    public static Models.s.PatientInformationSeries _patientInformationSeries { get; set; } = new();
-    public static Models.PatientInformationSeries2 _patientInformationSeries2 { get; set; } = new();
+    public static Models.s.AppointmentModule _AppointmentModule { get; set; } = new();
+    public static Models.s.InsuranceModule _InsuranceModule { get; set; } = new();
+    public static Models.s.PatientSelectionmodule _PatientSelectionmodule { get; set; } = new();
+    public static Models.PatientInformationmodule _PatientInformationmodule { get; set; } = new();
     public static Models.Provider _ProviderInformation{ get; set; } = new();
     #endregion
 
     #region Temporary Series Data
-    public static Models.s.AppointmentSeries _wipAppointmentSeries { get; set; } = new();
-    public static InsuranceSeries _wipInsuranceSeries { get; set; } = new();
-    public static PatientInformationSeries2 _wipPatientInformationSeries2 { get; set; } = new();
-    public static PatientInformationSeries _wipPatientInformationSeries { get; set; } = new();
-    public static bool _inEdit = false;
-    public static bool _isTeleHealth { get; set; }
+    public static Models.s.AppointmentModule _wipAppointmentModule { get; set; } = new();
+    public static InsuranceModule _wipInsuranceModule { get; set; } = new();
+    public static PatientInformationmodule _wipPatientInformationmodule { get; set; } = new();
+    public static PatientSelectionmodule _wipPatientSelectionmodule { get; set; } = new();
+    public static bool InEdit = false;
+    public static bool IsTeleHealth { get; set; }
     #endregion
 
     #region dependency injections
     [Inject]
-    protected NavigationManager _navigationManager { get; set; } = default!;
+    protected NavigationManager NavigationManager { get; set; } = default!;
     #endregion
 
      #region Page Directives
