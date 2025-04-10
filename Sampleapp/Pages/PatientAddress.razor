@@ -8,15 +8,23 @@
 <button class="btn btn-primary" @onclick="HandleValidSubmit" >Next</button>
 @code 
 {
+    protected override void OnInitialized()
+        {
+            if(!BaseComponent.PatientInformationPageDirectives.Contains("patient-address"))
+            {
+                BaseComponent.PatientInformationPageDirectives.Add("patient-address");
+            }
+        }
     private void HandleValidSubmit()
     {
-        string whereFromValue = "patientinformation2";
+        string whereFromValue = "patientinformation";
         string targetUrl = $"/controller/next/{whereFromValue}";
         _navigationManager.NavigateTo(targetUrl);
     }
 
     private void GoToPrevious()
     {
+        BaseComponent.PatientInformationPageDirectives.Remove("patient-address");
         _navigationManager.NavigateTo("patient-info");
     }
 

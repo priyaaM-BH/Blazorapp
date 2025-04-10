@@ -11,6 +11,14 @@
 <br>
 <p>​I am a page component accessible through the NavigationManager and routing mechanisms.  </p>
 @code {
+
+    protected override void OnInitialized()
+        {
+            if(!BaseComponent.AppointmentPageDirectives.Contains("tele-health"))
+            {
+                BaseComponent.AppointmentPageDirectives.Add("tele-health");
+            }
+        }
     private void HandleValidSubmit()
     {
         string whereFromValue = "appointment";
@@ -20,6 +28,7 @@
 
     private void GoToPrevious()
     {
+        BaseComponent.AppointmentPageDirectives.Remove("tele-health");
         _navigationManager.NavigateTo("/select-time");
     }
 

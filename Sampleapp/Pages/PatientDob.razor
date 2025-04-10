@@ -11,16 +11,23 @@
 <br>
 <p>​I am a page component accessible through the NavigationManager and routing mechanisms.  </p>
 @code {
-    
+    protected override void OnInitialized()
+    {
+        if(!BaseComponent.PatientSelectionPageDirectives.Contains("date-of-birth"))
+        {
+            BaseComponent.PatientSelectionPageDirectives.Add("date-of-birth");
+        }
+    }
     private void HandleValidSubmit()
     {
-        string whereFromValue = "patientinformation";
+        string whereFromValue = "patientselection";
         string targetUrl = $"/controller/next/{whereFromValue}";
         _navigationManager.NavigateTo(targetUrl);
     }
 
     private void GoToPreviousPage()
     {
+        BaseComponent.PatientSelectionPageDirectives.Remove("date-of-birth");
         _navigationManager.NavigateTo("/patient-selection");
     }
 

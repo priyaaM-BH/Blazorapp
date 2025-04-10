@@ -25,15 +25,20 @@ else
 @code {
     
     private string[] timeSlots = { "8.00", "9.00", "10.00", "11.00", "12.00", "1.00" };
+    protected override void OnInitialized()
+        {
+            if(!BaseComponent.AppointmentPageDirectives.Contains("select-time"))
+            {
+                BaseComponent.AppointmentPageDirectives.Add("select-time");
+            }
+        }
     private void HandleValidSubmit(string time)
     {
         _wipAppointmentSeries.SelectedTime = time;
-        if(_inEdit)
-        {
-            Console.WriteLine("istelehealth",_wipAppointmentSeries.IsTelehealth);
+        //if(_inEdit)
+        //{
             if(!_wipAppointmentSeries.IsTelehealth)
             {
-                Console.WriteLine("test");
                 string whereFromValue = "appointment";
                 string targetUrl = $"/controller/next/{whereFromValue}";
                 _navigationManager.NavigateTo(targetUrl);
@@ -42,15 +47,16 @@ else
             {
                 _navigationManager.NavigateTo("/tele-health");
             }
-        }
-        else
-        {
-            _navigationManager.NavigateTo("/tele-health");
-        }
+        //}
+        //else
+        //{
+        //    _navigationManager.NavigateTo("/tele-health");
+        //}
     }
 
     private void GoToPrevious()
         {
+            BaseComponent.AppointmentPageDirectives.Remove("select-time");
             _navigationManager.NavigateTo("/work-related");
         }
 }

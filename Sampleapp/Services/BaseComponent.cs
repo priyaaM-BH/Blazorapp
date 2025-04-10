@@ -30,6 +30,20 @@ public class BaseComponent : ComponentBase
     protected NavigationManager _navigationManager { get; set; } = default!;
     #endregion
 
+     #region Page Directives
+    //These are the pages each module visited.  If appointment module gets invoked, the first page of the module
+    //will create a new list with one entry being the page directive of the visit reason page.
+    //
+    //If then Sophia navigates to the next page, that page's oninitialize will add its page directive to the list.
+    //
+    //Any time Sophia hits the back button to go to a previous page, that page to remove the last entry (itself) in the list.
+    public static List<string> PatientSelectionPageDirectives { get; set; } = [];
+    public static List<string> AppointmentPageDirectives { get; set; } = [];
+    public static List<string> PatientInformationPageDirectives { get; set; } = [];
+    public static List<string> InsurancePageDirectives { get; set; } = [];
+
+    #endregion
+
     #region initial Data from all http calls
     
     //TODO: add portal user me, relationships, portal Application, insurance get coverages as public fields here

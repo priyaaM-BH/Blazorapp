@@ -5,6 +5,7 @@
 @inherits BaseComponent
 @using System.Linq;
 @using System.Text.Json;
+@using SampleApp.Models
 
 @code {
     [Parameter]
@@ -14,10 +15,10 @@
     [Parameter]
     public string? element { get; set; } = string.Empty;
     private static List<NavigationData> _navigationDataList = new List<NavigationData>();
-
     protected override void OnInitialized()
     {
         base.OnInitialized();
+         
         if (providerId != null)
         {
             providerId = providerId!.ToLower();
@@ -44,38 +45,38 @@
         NavigationData navigationData = new()
         {
             //date-of-birth is only for guest.
-            entryPointPageDirectives = ["patient-selection", "date-of-birth"],
-            seriesName = "patientinformation",
+            entryPointPageDirectives = ["patient-selection"],
+            seriesName = ModuleNames.patientselection.ToString(),
         };
         navDataList.Add(navigationData);
 
         navigationData = new()
         {
             //for inperson telehealth should be skipped
-            entryPointPageDirectives = ["visit-reason", "select-time", "work-related", "tele-health"],
-            seriesName = "appointment",
+            entryPointPageDirectives = ["visit-reason"],
+            seriesName = ModuleNames.appointment.ToString(),
         };
         navDataList.Add(navigationData);
 
         navigationData = new()
         {
             //patient-address is only for guest
-            entryPointPageDirectives = ["patient-info", "patient-address"],
-            seriesName = "patientinformation2",
+            entryPointPageDirectives = ["patient-info"],
+            seriesName = ModuleNames.patientinformation.ToString(),
         };
         navDataList.Add(navigationData);
 
         navigationData = new()
         {
-            entryPointPageDirectives = ["insurance","insurance-details", "insurance-information", "good-faith-estimate"],
-            seriesName = "insurance",
+            entryPointPageDirectives = ["insurance"],
+            seriesName = ModuleNames.insurance.ToString(),
         };
         navDataList.Add(navigationData);
 
         navigationData = new()
         {
             entryPointPageDirectives = ["review"],
-            seriesName = "review",
+            seriesName = ModuleNames.review.ToString(),
         };
         navDataList.Add(navigationData);
 
@@ -160,6 +161,7 @@
                     }
                     //Not in Edit mode.  Go back to the previous series.
                     int index = _navigationDataList.FindIndex(n => n.seriesName == seriesName);
+
                     if (index == -1)
                     {
                         throw new ApplicationException($"Could not find series by name: {seriesName}");
@@ -168,8 +170,9 @@
                     {
                         throw new ApplicationException($"Encountered a go-back command while in the first series");
                     }
+                    string targetUrl = SetLastDirectivesOfModule(seriesName);
                     //Navigate to the previous's series' "last" page.
-                    _navigationManager.NavigateTo($"{_navigationDataList[index - 1].entryPointPageDirectives[^1]}");
+                    _navigationManager.NavigateTo($"{targetUrl}");
 
                     //TODO note: When Sophia clicks on any Edit button in the review page, copy all permanent data first
                     //to the wip structures.
@@ -188,9 +191,8 @@
                         CopyPermanentToWip(_navigationDataList[s].seriesName);
                     }
                     //Navigate to the relevant page in the series
-                    string pageDirective = GetPageDirectiveForElement(element!);
-                    Console.WriteLine("pageDirective - {0}", pageDirective);
-                    _navigationManager.NavigateTo(pageDirective);  //TODO These relative URLs may not work...
+                    //string pageDirective = GetPageDirectiveForElement(element!);
+                    _navigationManager.NavigateTo(element);  
                     return;
                 }
                 //TODO Do we set isEdit off under all pertinent circumstances?
@@ -228,43 +230,11 @@
     /// This is 'top' for the first page and other names/values for subsequent pages in the 
     /// same multi-page series.
     /// </param>
-    private string GetPageDirectiveForElement(string element)
-    {
-        NavigationData navigationData = new();
-        Console.WriteLine("element - {0}",element);
-        switch (element)
-        {
-            case "visitreason":
-                {
-                    navigationData = _navigationDataList.First(n => n.seriesName == "appointment");
-                    return navigationData.entryPointPageDirectives[0];
-                }
-            case "locationandtime":
-                {
-                    navigationData = _navigationDataList.First(n => n.seriesName == "appointment");
-                    return navigationData.entryPointPageDirectives[1];
-                }
-            case "work-related":
-                {
-                    navigationData = _navigationDataList.First(n => n.seriesName == "appointment");
-                    return navigationData.entryPointPageDirectives[2];
-                }
-            case "insurance":
-                {
-                    navigationData = _navigationDataList.First(n => n.seriesName == "insurance");
-                    return navigationData.entryPointPageDirectives[0];
-                }
-            default:
-                {
-                    throw new ApplicationException($"Invalid element value encountered: {element}");
-                }
-        }
-    }
-    private void CopyPermanentToWip(string seriesName)
+        private void CopyPermanentToWip(string seriesName)
     {
         switch (seriesName)
         {
-            case "patientinformation":
+            case "patientselection":
                 {
                     string jsonData = System.Text.Json.JsonSerializer.Serialize(_patientInformationSeries);
                     _wipPatientInformationSeries = System.Text.Json.JsonSerializer.Deserialize<PatientInformationSeries>(jsonData)!;
@@ -276,7 +246,7 @@
                     _wipAppointmentSeries = System.Text.Json.JsonSerializer.Deserialize<AppointmentSeries>(jsonData)!;
                     return;
                 }
-            case "patientinformation2":
+            case "patientinformation":
                 {
                     string jsonData = System.Text.Json.JsonSerializer.Serialize(_patientInformationSeries2);
                     _wipPatientInformationSeries2 = System.Text.Json.JsonSerializer.Deserialize<PatientInformationSeries2>(jsonData)!;
@@ -298,11 +268,38 @@
                 }
         }
     }
+
+    private string SetLastDirectivesOfModule(string seriesName)
+    {
+        switch (seriesName)
+        {
+            case "appointment":
+                {
+                    return BaseComponent.PatientSelectionPageDirectives.Last();
+                }
+            case "patientinformation":
+                {
+                    return BaseComponent.AppointmentPageDirectives.Last();
+                }
+            case "insurance":
+                {
+                    return BaseComponent.PatientInformationPageDirectives.Last();
+                }
+            case "review":
+                {
+                    throw new ApplicationException("Review page should not have gotten here");
+                }
+            default:
+                {
+                    throw new ApplicationException($"Unknown series name: {seriesName}");
+                }
+        } 
+    }
     private void CopyWipToPermanent(string seriesName)
     {
         switch (seriesName)
         {
-            case "patientinformation":
+            case "patientselection":
                 {
                     string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipPatientInformationSeries);
                     _patientInformationSeries = System.Text.Json.JsonSerializer.Deserialize<PatientInformationSeries>(jsonData)!;
@@ -314,7 +311,7 @@
                     _appointmentSeries = System.Text.Json.JsonSerializer.Deserialize<AppointmentSeries>(jsonData)!;
                     return;
                 }
-            case "patientinformation2":
+            case "patientinformation":
                 {
                     string jsonData = System.Text.Json.JsonSerializer.Serialize(_wipPatientInformationSeries2);
                     _patientInformationSeries2 = System.Text.Json.JsonSerializer.Deserialize<PatientInformationSeries2>(jsonData)!;

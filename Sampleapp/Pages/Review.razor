@@ -68,7 +68,7 @@
 {
     protected override async Task OnInitializedAsync()
     {
-
+        Console.WriteLine(BaseComponent.AppointmentPageDirectives[2]);
     }
 
     private void GoToPageWorkRelated()
@@ -79,7 +79,7 @@
     {
         _appointmentSeries.IsEditing = true;
         _inEdit = true;
-        _navigationManager.NavigateTo("/controller/edit/visitreason");
+        _navigationManager.NavigateTo("/controller/edit/visit-reason");
     }
 
     private void GoToInsurancePage()

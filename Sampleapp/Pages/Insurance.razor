@@ -13,8 +13,17 @@
 
 @code {   
 
+    protected override void OnInitialized()
+        {
+            if(BaseComponent.InsurancePageDirectives.Contains("insurance"))
+            {
+                BaseComponent.InsurancePageDirectives.Add("insurance");
+            }
+        }
+
         private void GoToPrevious()
         {
+            BaseComponent.InsurancePageDirectives.Remove("insurance");
             string whereFromValue = "insurance";
             string targetUrl = $"/controller/back/{whereFromValue}";
             _navigationManager.NavigateTo(targetUrl);
