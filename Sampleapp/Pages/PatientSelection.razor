@@ -14,10 +14,17 @@
 <p>​I am a page component accessible through the NavigationManager and routing mechanisms.  </p>
 @code {
 
+    protected override void OnInitialized()
+    {
+        if(!BaseComponent.PatientSelectionPageDirectives.Contains("patient-selection"))
+        {
+            BaseComponent.PatientSelectionPageDirectives.Add("patient-selection");
+        }
+    }
     private void HandleValidSubmit(BookingFor bookingFor)
     {
         _wipPatientInformationSeries.BookingFor = bookingFor;
-        string whereFromValue = "patientinformation";
+        string whereFromValue = "patientselection";
         string targetUrl;
         if( bookingFor == BookingFor.Guest)
         {

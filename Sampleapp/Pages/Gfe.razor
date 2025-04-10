@@ -12,9 +12,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //Console.WriteLine("visit reason - {0}", _appointmentSeries?.VisitReasonForm?.PatientRelationship);
-        //Console.WriteLine(_appointmentSeries.ProviderID);
-        //Console.WriteLine(_wipAppointmentSeries.ProviderID);
+       if(BaseComponent.InsurancePageDirectives.Contains("good-faith-estimate"))
+       {
+            BaseComponent.InsurancePageDirectives.Add("good-faith-estimate");
+       }
     }
     private void HandleValidSubmit()
     {
@@ -24,6 +25,7 @@
     }
     private void GoToPrevious()
     {
+        BaseComponent.InsurancePageDirectives.Remove("good-faith-estimate");
         _navigationManager.NavigateTo("/insurance");
     }
 

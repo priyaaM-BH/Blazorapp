@@ -26,6 +26,13 @@
 </EditForm>
 
 @code {   
+    protected override void OnInitialized()
+        {
+            if(!BaseComponent.InsurancePageDirectives.Contains("insurance-details"))
+            {
+                BaseComponent.InsurancePageDirectives.Add("insurance-details");
+            }
+        }
         private void HandleValidSubmit() 
         {
             _navigationManager.NavigateTo("insurance-information");
@@ -33,6 +40,7 @@
 
         private void GoToPrevious()
         {
+            BaseComponent.InsurancePageDirectives.Remove("insurance-details");
             _navigationManager.NavigateTo("/insurance");
         }
     }

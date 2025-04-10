@@ -12,11 +12,17 @@
 <p>​I am a page component accessible through the NavigationManager and routing mechanisms.  </p>
 @code {
     
+    protected override void OnInitialized()
+        {
+            if(!BaseComponent.AppointmentPageDirectives.Contains("work-related"))
+            {
+                BaseComponent.AppointmentPageDirectives.Add("work-related");
+            }  
+        }
     private void HandleValidSubmit()
     {
         if(_inEdit)
         {
-                Console.WriteLine("test");
                 string whereFromValue = "appointment";
                 string targetUrl = $"/controller/next/{whereFromValue}";
                 _navigationManager.NavigateTo(targetUrl);
@@ -30,7 +36,17 @@
 
     private void GoToPrevious()
     {
-        _navigationManager.NavigateTo("/visit-reason");
+        BaseComponent.AppointmentPageDirectives.Remove("work-related");
+        if(_inEdit)
+        {
+            string whereFromValue = "appointment";
+            string targetUrl = $"/controller/back/{whereFromValue}";
+            _navigationManager.NavigateTo(targetUrl);
+        }
+        else
+        {
+            _navigationManager.NavigateTo("/visit-reason");
+        }
     }
 
     

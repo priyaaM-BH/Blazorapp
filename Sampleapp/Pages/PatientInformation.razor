@@ -9,14 +9,16 @@
 @code 
 {
     protected override async Task OnInitializedAsync()
-    {
-        //Console.WriteLine("visit reason - {0}", _appointmentSeries?.VisitReasonForm?.PatientRelationship);
-        //Console.WriteLine(_appointmentSeries.ProviderID);
-        //Console.WriteLine(_wipAppointmentSeries.ProviderID);
+    {   
+        if(!BaseComponent.PatientInformationPageDirectives.Contains("patient-info"))
+        {
+            BaseComponent.PatientInformationPageDirectives.Add("patient-info");  
+        }
     }
     private void GoToPrevious()
     {
-        string whereFromValue = "patientinformation2";
+        BaseComponent.PatientInformationPageDirectives.Remove("patient-info");  
+        string whereFromValue = "patientinformation";
         string targetUrl = $"/controller/back/{whereFromValue}";
         _navigationManager.NavigateTo(targetUrl);
     }
